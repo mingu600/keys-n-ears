@@ -1,5 +1,6 @@
 // Song schema: normalisation, chord lookup, progressions. Pure functions.
 import { parseChordSymbol } from '../theory/parse.js';
+import { parseNote } from '../theory/chords.js';
 import { loopOf, loopFamily, toRoman } from '../theory/roman.js';
 
 export const GENRES = ['Pop', 'Rock', 'R&B/Soul', 'Jazz', 'K-pop', 'J-pop/Anime', 'Game'];
@@ -24,16 +25,23 @@ const beatsPerBar = (song) => {
   return Number.isFinite(n) && n > 0 ? n : 4;
 };
 
+export function validKey(key) {
+  if (!key || typeof key !== 'object' || (key.mode !== 'major' && key.mode !== 'minor')) return false;
+  try { parseNote(String(key.tonic)); return true; } catch { return false; }
+}
+
 export function normalizeSong(raw) {
   const errors = [];
   const r = raw && typeof raw === 'object' ? raw : {};
   const song = {
     ...r,
-    hooks: Array.isArray(r.hooks) ? r.hooks.map(h => ({ ...h, verified: h.verified ?? false })) : [],
+    hooks: Array.isArray(r.hooks) ? r.hooks.map(h => (h && typeof h === 'object' ? { ...h, verified: h.verified ?? false } : h)) : [],
     youtube: { id: r.youtube?.id ?? null, offset: r.youtube?.offset ?? 0 },
     verified: r.verified ?? false,
   };
-  const sections = Array.isArray(r.sections) ? r.sections : [];
+  const sections = Array.isArray(r.sections) ? r.sections.filter(s => s && typeof s === 'object') : [];
+  if (Array.isArray(r.sections) && sections.length !== r.sections.length) errors.push('section is not an object');
+  if (!validKey(r.key)) errors.push('missing or invalid key');
   if (!r.id) errors.push('missing id');
   if (!r.title) errors.push('missing title');
   if (!r.artist) errors.push('missing artist');
@@ -42,7 +50,10 @@ export function normalizeSong(raw) {
   if (!sections.length) errors.push('no sections');
 
   for (const sec of sections) {
-    (sec.bars ?? []).forEach((bar, i) => {
+    if (sec.key !== undefined && !validKey(sec.key)) errors.push(`${sec.name}: invalid key`);
+    if (!Array.isArray(sec.bars)) { errors.push(`${sec.name}: bars must be a list`); continue; }
+    sec.bars.forEach((bar, i) => {
+      if (!Array.isArray(bar)) { errors.push(`${sec.name} bar ${i + 1}: not a list of chords`); return; }
       for (const raw of bar) {
         const { symbol } = splitSymbol(raw);
         if (!parseChordSymbol(symbol)) errors.push(`${sec.name} bar ${i + 1}: "${symbol}"`);
@@ -52,22 +63,25 @@ export function normalizeSong(raw) {
 
   const names = new Set(sections.map(s => s.name));
   song.form = Array.isArray(r.form)
-    ? r.form.map(f => ({ section: f.section, start: f.start ?? null, chordTimes: f.chordTimes ?? null }))
+    ? r.form.map(f => (f && typeof f === 'object'
+      ? { section: f.section, start: f.start ?? null, chordTimes: f.chordTimes ?? null }
+      : { section: undefined, start: null, chordTimes: null }))
     : sections.map(s => ({ section: s.name, start: null, chordTimes: null }));
   for (const f of song.form) if (!names.has(f.section)) errors.push(`form references missing section "${f.section}"`);
 
   for (const h of song.hooks) {
-    if (!hookSizeOk(h)) errors.push(`hook "${h.name}" must have ${HOOK_MIN}-${HOOK_MAX} notes`);
+    if (!hookSizeOk(h)) errors.push(`hook "${h?.name}" must have ${HOOK_MIN}-${HOOK_MAX} notes`);
   }
   return { song, errors };
 }
 
 export function sectionChords(song, sectionName) {
-  const sec = (song.sections ?? []).find(s => s.name === sectionName);
-  if (!sec) return [];
+  const sec = (song.sections ?? []).find(s => s?.name === sectionName);
+  if (!sec || !Array.isArray(sec.bars)) return [];
   const perBar = beatsPerBar(song);
   const out = [];
-  (sec.bars ?? []).forEach((bar, barIdx) => {
+  sec.bars.forEach((bar, barIdx) => {
+    if (!Array.isArray(bar)) return;
     const items = bar.map(splitSymbol);
     const fixed = items.reduce((n, it) => n + (it.beats ?? 0), 0);
     const free = items.filter(it => it.beats == null).length;
@@ -83,8 +97,9 @@ export function sectionChords(song, sectionName) {
 }
 
 export function songProgressions(song) {
-  return (song.sections ?? []).map(sec => {
+  return (song.sections ?? []).filter(Boolean).map(sec => {
     const key = sec.key ?? song.key;
+    if (!validKey(key)) return { section: sec.name, key, romans: [], family: null };
     const chords = sectionChords(song, sec.name).map(c => c.chord).filter(Boolean);
     return {
       section: sec.name,

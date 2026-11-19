@@ -57,3 +57,22 @@ test('chordAtTime', () => {
   assert.equal(chordAtTime(song, 14.5).chordIndex, 2);
   assert.equal(chordAtTime(song, 9), null);
 });
+test('normalizeSong tolerates malformed structure without throwing', () => {
+  const ok = { id: 'x', title: 'X', artist: 'A', genres: ['Pop'], key: { tonic: 'C', mode: 'major' } };
+  assert.doesNotThrow(() => normalizeSong({ id: 'x', sections: [null] }));
+  assert.ok(normalizeSong({ ...ok, sections: [null] }).errors.length > 0);
+  assert.ok(normalizeSong({ ...ok, sections: [{ name: 'V', bars: [null] }] }).errors.length > 0);
+  assert.ok(normalizeSong({ ...ok, sections: [{ name: 'V', bars: 'C G' }] }).errors.length > 0);
+  assert.ok(normalizeSong({ ...ok, sections: [{ name: 'V', bars: [['C']] }], form: [null] }).errors.length > 0);
+  assert.ok(normalizeSong({ ...ok, sections: [{ name: 'V', bars: [['C']] }], hooks: [null] }).errors.length > 0);
+  assert.doesNotThrow(() => normalizeSong(null));
+});
+test('normalizeSong reports bad key; songProgressions survives it', () => {
+  const sections = [{ name: 'V', bars: [['C', 'G']] }];
+  const raw = { id: 'x', title: 'X', artist: 'A', genres: ['Pop'], sections };
+  assert.ok(normalizeSong(raw).errors.some(e => /key/.test(e)));
+  assert.ok(normalizeSong({ ...raw, key: { tonic: 'H', mode: 'major' } }).errors.some(e => /key/.test(e)));
+  assert.ok(normalizeSong({ ...raw, key: { tonic: 'C', mode: 'dorian' } }).errors.some(e => /key/.test(e)));
+  const song = normalizeSong(raw).song;
+  assert.deepEqual(songProgressions(song), [{ section: 'V', key: undefined, romans: [], family: null }]);
+});

@@ -30,8 +30,14 @@ export function parsePack(text) {
 export function mergeLibrary(seeds, packs, userSongs) {
   const warnings = [];
   const byId = new Map(seeds.map(s => [s.id, clone(s)]));
-  const ordered = [...packs].sort((a, b) => String(a.createdAt).localeCompare(String(b.createdAt)));
+  const ordered = [...packs].sort((a, b) => String(a?.createdAt).localeCompare(String(b?.createdAt)));
   for (const pack of ordered) {
+    if (!pack || typeof pack !== 'object' || !pack.id || (pack.songs != null && !Array.isArray(pack.songs))
+      || (pack.hooks != null && (typeof pack.hooks !== 'object' || Array.isArray(pack.hooks)))) {
+      warnings.push(`pack ${pack?.id ?? '?'}: malformed, skipped`);
+      continue;
+    }
+    try {
     for (const s of pack.songs ?? []) byId.set(s.id, { ...clone(s), source: 'pack' });
     for (const [songId, hooks] of Object.entries(pack.hooks ?? {})) {
       const song = byId.get(songId);
@@ -42,6 +48,7 @@ export function mergeLibrary(seeds, packs, userSongs) {
         if (i >= 0) song.hooks[i] = h; else song.hooks.push(h);
       }
     }
+    } catch (e) { warnings.push(`pack ${pack.id}: malformed, partly skipped (${e.message})`); }
   }
   for (const u of userSongs) {
     byId.set(u.id, { ...clone(u), source: byId.has(u.id) ? 'seed-edited' : 'user' });
@@ -76,20 +83,37 @@ export function parseImport(text) {
 export async function loadLibrary(store) {
   const lib = { songs: [], errorsById: new Map(), warnings: [], reload };
   async function reload() {
-    const names = await (await fetch('data/seeds/index.json')).json();
-    const errorsById = new Map();
+    const errorsById = new Map(), warnings = [];
     const check = (raw) => {
-      const { song, errors } = normalizeSong(raw);
-      if (errors.length) errorsById.set(song.id ?? '?', errors);
-      return song;
+      try {
+        const { song, errors } = normalizeSong(raw);
+        if (errors.length) errorsById.set(song.id ?? '?', errors);
+        return song;
+      } catch (e) {
+        errorsById.set(raw?.id ?? '?', [`could not be read: ${e.message}`]);
+        return null;
+      }
+    };
+    const getJson = async (url) => {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      return res.json();
     };
     const seeds = [];
+    let names = [];
+    try { names = await getJson('data/seeds/index.json'); if (!Array.isArray(names)) throw new Error('index is not a list'); }
+    catch (e) { warnings.push(`seed index: ${e.message}`); names = []; }
     for (const name of names) {
-      const list = await (await fetch(`data/seeds/${name}`)).json();
-      for (const raw of list) seeds.push(check(raw));
+      try {
+        const list = await getJson(`data/seeds/${name}`);
+        if (!Array.isArray(list)) throw new Error('not a list of songs');
+        for (const raw of list) { const s = check(raw); if (s) seeds.push(s); }
+      } catch (e) { warnings.push(`seed file ${name}: ${e.message}`); }
     }
-    const users = (await store.getSongs()).map(check);
-    const merged = mergeLibrary(seeds, (await store.getPacks()).map(r => r.pack), users);
+    const users = (await store.getSongs()).map(check).filter(Boolean);
+    const packs = (await store.getPacks()).map(r => r?.pack);
+    const merged = mergeLibrary(seeds, packs, users);
+    merged.warnings.unshift(...warnings);
     lib.songs = merged.songs;
     lib.warnings = merged.warnings;
     lib.errorsById = errorsById;

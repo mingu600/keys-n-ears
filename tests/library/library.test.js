@@ -57,3 +57,9 @@ test('parseImport rejects bad input', () => {
   assert.equal(e.app, 'practice-hub');
   assert.equal(parseImport(JSON.stringify(e)).ok, true);
 });
+test('mergeLibrary skips malformed packs with a warning', () => {
+  const good = { id: 'g', createdAt: '2', songs: [{ id: 'n', title: 'N' }], hooks: {} };
+  const r = mergeLibrary([{ id: 'a', title: 'A' }], [null, { id: 'bad', createdAt: '1', songs: 5, hooks: 'x' }, { id: 'bad2' }, good], []);
+  assert.ok(r.warnings.some(w => /bad/.test(w)));
+  assert.deepEqual(r.songs.map(s => s.id), ['a', 'n']);
+});
