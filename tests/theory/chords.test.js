@@ -88,3 +88,10 @@ test('every quality spells and reveals validly', () => {
     assert.ok(matches(c, revealVoicing(c), { strict: true }), q);
   }
 });
+
+test('strict mode requires every tone including the 5th', () => {
+  const g7 = makeChord('G', '7');
+  assert.ok(matches(g7, [43, 59, 65]));
+  assert.ok(!matches(g7, [43, 59, 65], { strict: true }));
+  assert.ok(matches(g7, [43, 59, 62, 65], { strict: true }));
+});

@@ -147,7 +147,7 @@ export function matches(chord, heldNotes, { lenient = true, strict = false } = {
     for (const pc of chord.essential) if (!heldPcs.has(pc)) return false;
   } else {
     const rootPc = chord.tones[0].pc;
-    const canDropFifth = lenient && chord.tones.length >= 4;
+    const canDropFifth = lenient && !strict && chord.tones.length >= 4;
     for (const t of chord.tones) {
       if (heldPcs.has(t.pc)) continue;
       const isPerfectFifth = t.semis === 7 && t.pc !== rootPc;
