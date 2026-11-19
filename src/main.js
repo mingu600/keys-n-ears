@@ -1,8 +1,10 @@
 import { createMidi } from './core/midi.js';
 import { createSound } from './core/sound.js';
 import { createRouter } from './core/router.js';
+import { openStore } from './core/store.js';
+import { loadLibrary } from './library/library.js';
+import { GENRES } from './library/schema.js';
 
-export const GENRES = ['Pop', 'Rock', 'R&B/Soul', 'Jazz', 'K-pop', 'J-pop/Anime', 'Game'];
 const SETTINGS_KEY = 'hub:settings';
 
 function loadSettings() {
@@ -41,6 +43,9 @@ if (location.hostname === 'localhost') window.ctx = ctx;
 const routes = [
   ['/', () => import('./views/home.js')],
   ['/drill', () => import('./views/drill.js')],
+  ['/library', () => import('./views/library.js')],
+  ['/song/new', () => import('./views/song-editor.js')],
+  ['/song/:id/edit', () => import('./views/song-editor.js')],
 ];
 const router = createRouter(routes, $('view'), ctx);
 
@@ -92,6 +97,7 @@ function renderGenres() {
       settings.genres = GENRES.filter((x) => set.has(x));
       saveSettings();
       renderGenreSummary();
+      window.dispatchEvent(new CustomEvent('hub:genres')); // views re-filter on this
     });
     label.append(input, ` ${g}`);
     box.appendChild(label);
@@ -104,4 +110,11 @@ function renderGenreSummary() {
 }
 renderGenres();
 
+// Open the store and load the library before the first view renders.
+try {
+  ctx.store = await openStore();
+  ctx.library = await loadLibrary(ctx.store);
+} catch (e) {
+  console.error('Could not open the song store', e);
+}
 router.start();

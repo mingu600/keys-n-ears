@@ -6,7 +6,7 @@ const TILES = [
   { title: 'Lead Sheet Play-Along', desc: 'Play through a chart with a backing track.' },
   { title: 'Chord Drill', desc: 'Play the chord shown, as fast as you can.', href: '#/drill' },
   { title: 'Progression Explorer', desc: 'Browse common progressions by key.' },
-  { title: 'Song Library', desc: 'Your songs and charts.' },
+  { title: 'Song Library', desc: 'Your songs and charts.', href: '#/library' },
 ];
 
 export function mount(el) {
