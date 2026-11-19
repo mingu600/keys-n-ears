@@ -1,0 +1,9 @@
+{
+  "name": "chord-drill",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/",
+    "dev": "python3 -m http.server 8000"
+  }
+}

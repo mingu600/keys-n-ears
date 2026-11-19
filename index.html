@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chord Drill</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Chord Drill</h1>
+    <span id="midi-status" class="status">Connecting MIDI…</span>
+  </header>
+
+  <main>
+    <section class="stage">
+      <div id="chord" class="chord">…</div>
+      <div class="meta">
+        <span id="timer" class="timer">0.0s</span>
+        <span id="feedback" class="feedback"></span>
+      </div>
+      <div id="tones" class="tones"></div>
+      <div class="actions">
+        <button id="hint" type="button">Hint <kbd>Space</kbd></button>
+        <button id="skip" type="button">Skip <kbd>Enter</kbd></button>
+        <button id="clear" type="button">Release all <kbd>Esc</kbd></button>
+      </div>
+    </section>
+
+    <div id="keyboard" class="keyboard" aria-label="Piano keyboard"></div>
+    <p class="help">No piano? Lower row <kbd>Z</kbd>–<kbd>M</kbd> = C3–B3 (black keys on <kbd>S D G H J</kbd>), upper row <kbd>Q</kbd>–<kbd>P</kbd> = C4–E5 (black keys on number row). Or click keys to toggle them.</p>
+
+    <section class="panels">
+      <div class="panel">
+        <h2>Chords</h2>
+        <div id="families" class="checks"></div>
+        <label><input type="checkbox" id="slash"> Slash chords (D/F♯, Cmaj7/B)</label>
+        <label><input type="checkbox" id="lenient"> Allow dropping the 5th in 4-note chords</label>
+        <p id="pool-size" class="muted"></p>
+      </div>
+      <div class="panel">
+        <h2>Progress</h2>
+        <p id="session"></p>
+        <h3>Slowest chords (all time)</h3>
+        <ol id="slowest" class="slowest"></ol>
+        <button id="reset" type="button" class="quiet">Reset timings</button>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="src/app.js"></script>
+</body>
+</html>
