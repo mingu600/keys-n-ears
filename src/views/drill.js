@@ -1,6 +1,6 @@
 import { buildPool, matches, revealVoicing, FAMILIES } from '../theory/chords.js';
 import { record, pickNext, weakest, scoreFromTime, withHint, SKIP_SCORE, TARGETS } from '../core/scheduler.js';
-import { createInput } from '../core/midi.js';
+import { createMidi } from '../core/midi.js';
 import { createKeyboard } from '../ui/keyboard.js';
 import * as synth from '../core/fallback-synth.js';
 
@@ -160,24 +160,25 @@ function applySettings() {
 }
 
 // ---------- wiring ----------
-const keyboard = createKeyboard($('keyboard'), { onClick: (note) => input.toggle(note) });
+const keyboard = createKeyboard($('keyboard'), { onClick: (note) => midi.toggle(note) });
 
-const input = createInput({
-  onChange(held, source) {
-    state.held = held;
-    if (source !== 'midi') synth.sync(held);
-    render();
-    check();
-  },
+const midi = createMidi({
   onStatus({ ok, text }) {
     $('midi-status').textContent = text;
     $('midi-status').className = ok ? 'status ok' : 'status';
   },
 });
 
+midi.on('change', ({ held, source }) => {
+  state.held = held;
+  if (source !== 'midi') synth.sync(held);
+  render();
+  check();
+});
+
 $('hint').addEventListener('click', hint);
 $('skip').addEventListener('click', skip);
-$('clear').addEventListener('click', () => input.clear());
+$('clear').addEventListener('click', () => midi.clear());
 $('reset').addEventListener('click', () => {
   if (!confirm('Reset all saved chord timings?')) return;
   state.stats = {};
@@ -193,7 +194,7 @@ window.addEventListener('keydown', (e) => {
     e.preventDefault();
     skip();
   } else if (e.key === 'Escape') {
-    input.clear();
+    midi.clear();
   }
 });
 
