@@ -188,6 +188,7 @@ export function mount(el, params, ctx) {
     notEmbeddable = false; unavailable = '';
     stopTapping(false);
     ytBox.hidden = !id;
+    if (!id) { try { player?.pause(); } catch { /* player gone */ } }
     if (id) {
       try {
         if (!player) {
@@ -271,11 +272,18 @@ export function mount(el, params, ctx) {
 
   // ---------- hooks ----------
   const hooksBox = h('section', { class: 'panel' });
-  let hookName = '', hookSection = null, recorder = null, hookMsg = '';
+  let hookName = '', hookSection = null, recorder = null, hookMsg = '', offEcho = null;
+  function stopEcho() {
+    if (!offEcho) return;
+    offEcho();
+    offEcho = null;
+    ctx.sound.echo(new Set());
+  }
   function stopRecording() {
     if (!recorder) return;
     const notes = recorder.stop();
     recorder = null;
+    stopEcho();
     if (notes.length < 4) hookMsg = 'Need at least 4 notes. Nothing was saved.';
     else {
       draft.hooks.push({ name: hookName || `Hook ${draft.hooks.length + 1}`, section: hookSection, notes, verified: false });
@@ -283,7 +291,7 @@ export function mount(el, params, ctx) {
     }
     renderHooks(); validate();
   }
-  cleanups.push(() => { recorder?.stop(); recorder = null; });
+  cleanups.push(() => { recorder?.stop(); recorder = null; stopEcho(); });
   function renderHooks() {
     if (!sectionNames().includes(hookSection)) hookSection = sectionNames()[0] ?? null;
     hooksBox.replaceChildren(h('h2', {}, 'Melody hooks'));
@@ -300,6 +308,8 @@ export function mount(el, params, ctx) {
         : h('button', { type: 'button', onclick: () => {
           hookMsg = '';
           recorder = recordHook(ctx.midi, draft.bpm || 100, () => stopRecording());
+          // QWERTY/mouse notes are silent otherwise; the piano makes its own sound.
+          offEcho = ctx.midi.on('change', ({ held, source }) => { if (source !== 'midi') ctx.sound.echo(held); });
           renderHooks();
         } }, 'Record hook')),
     recorder ? h('p', { role: 'status' }, 'Recording: play 4 to 16 notes on your piano or computer keys, then press Stop.') : null,

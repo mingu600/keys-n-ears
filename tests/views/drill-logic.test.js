@@ -18,3 +18,8 @@ test('voiceLeadOk threshold', () => {
   assert.ok(voiceLeadOk([48, 64, 67, 72], [53, 65, 69, 72]));
   assert.ok(!voiceLeadOk([60, 64, 67], [62, 74, 77]));
 });
+
+test('progressionPrompt collapses consecutive repeated chords', () => {
+  const song = { timeSignature: [4, 4], sections: [{ name: 'A', bars: [['C', 'C'], ['C', 'G'], ['G', 'C']] }] };
+  assert.deepEqual(progressionPrompt(song).map(c => c.id), ['C', 'G', 'C']);
+});

@@ -35,7 +35,7 @@ export function createRouter(routes, el, ctx) {
       mod = await found.loader();
     } catch (err) {
       if (my !== token) return;
-      el.textContent = `Could not load this page: ${err.message}`;
+      el.textContent = `Could not load this page: ${err.message}. Reload the page (Cmd-Shift-R) — the app may have just been updated.`;
       return;
     }
     if (my !== token) return; // a newer navigation superseded this one

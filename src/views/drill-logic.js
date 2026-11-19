@@ -19,7 +19,12 @@ export function poolFromSongs(songs) {
 export function progressionPrompt(song) {
   const first = (song.sections ?? [])[0];
   if (!first) return [];
-  return sectionChords(song, first.name).map((c) => c.chord).filter(Boolean);
+  const out = [];
+  for (const c of sectionChords(song, first.name).map((x) => x.chord).filter(Boolean)) {
+    if (out.length && out[out.length - 1].id === c.id) continue; // repeated chord: nothing new to play
+    out.push(c);
+  }
+  return out;
 }
 
 export function voiceLeadOk(prevNotes, nextNotes, maxMove = 4) {
