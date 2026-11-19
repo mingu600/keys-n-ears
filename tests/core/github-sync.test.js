@@ -10,9 +10,9 @@ function fakeFetch(files, { listStatus = 200 } = {}) {
   const fn = async (url, opts) => {
     calls.push({ url, opts });
     if (url.endsWith('/contents/packs')) {
-      return { ok: listStatus === 200, status: listStatus, json: async () => files.map(f => ({ name: f.name, sha: f.sha, url: `raw/${f.name}`, type: 'file' })) };
+      return { ok: listStatus === 200, status: listStatus, json: async () => files.map(f => ({ name: f.name, sha: f.sha, url: `https://api.github.com/repos/o/r/contents/packs/${f.name}`, type: 'file' })) };
     }
-    const f = files.find(x => url === `raw/${x.name}`);
+    const f = files.find(x => url === `https://api.github.com/repos/o/r/contents/packs/${x.name}`);
     return { ok: true, status: 200, text: async () => f.body };
   };
   fn.calls = calls;
@@ -56,4 +56,21 @@ test('401 gives one clear error', async () => {
   const r = await syncPacks(cfg, store, fakeFetch([], { listStatus: 401 }));
   assert.deepEqual(r.errors, ['Token rejected or repo not found']);
   assert.equal(store.put.length, 0);
+});
+
+test('listing entry on another host is never fetched with the token', async () => {
+  const store = fakeStore();
+  const f = fakeFetch([{ name: 'a.json', sha: 's1', body: pack('a') }]);
+  const orig = f;
+  const wrapped = async (url, opts) => {
+    if (url.endsWith('/contents/packs')) {
+      const r = await orig(url, opts);
+      return { ...r, json: async () => [{ name: 'a.json', sha: 's1', url: 'https://evil.example/a.json', type: 'file' }] };
+    }
+    return orig(url, opts);
+  };
+  const r = await syncPacks(cfg, store, wrapped);
+  assert.equal(r.errors.length, 1);
+  assert.equal(store.put.length, 0);
+  assert.ok(!orig.calls.some(c => c.url.includes('evil.example')));
 });

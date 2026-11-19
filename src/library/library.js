@@ -71,6 +71,25 @@ export function buildExport({ songs, kv, packs }) {
   return out;
 }
 
+// Export never carries the GitHub token; import never overwrites the one already stored.
+export function withoutToken(data) {
+  const out = { ...data, kv: { ...(data.kv ?? {}) } };
+  if (out.kv.contentSync && typeof out.kv.contentSync === 'object') {
+    const { token, ...rest } = out.kv.contentSync;
+    out.kv.contentSync = rest;
+  }
+  return out;
+}
+
+export function keepToken(data, currentSync) {
+  const kv = { ...(data.kv ?? {}) };
+  if (currentSync?.token) {
+    const theirs = kv.contentSync && typeof kv.contentSync === 'object' ? kv.contentSync : {};
+    kv.contentSync = { ...currentSync, ...theirs, token: currentSync.token };
+  }
+  return { ...data, kv };
+}
+
 export function parseImport(text) {
   let d;
   try { d = JSON.parse(text); } catch (e) { return { ok: false, error: 'Not valid JSON.' }; }

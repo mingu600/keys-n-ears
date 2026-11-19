@@ -71,3 +71,22 @@ test('mergeLibrary skips id-less pack songs individually', () => {
   assert.equal(r.warnings.filter(w => w === 'pack p: song without id skipped').length, 2);
   assert.equal(r.songs[0].hooks.length, 1);
 });
+
+import { withoutToken, keepToken } from '../../src/library/library.js';
+test('withoutToken omits contentSync.token from an export', () => {
+  const d = { app: 'practice-hub', songs: [], kv: { contentSync: { owner: 'o', repo: 'r', token: 'secret' }, x: 1 } };
+  const out = withoutToken(d);
+  assert.deepEqual(out.kv.contentSync, { owner: 'o', repo: 'r' });
+  assert.equal(out.kv.x, 1);
+  assert.equal(d.kv.contentSync.token, 'secret'); // input untouched
+  assert.deepEqual(withoutToken({ kv: {} }).kv, {});
+});
+test('keepToken preserves the current token on import', () => {
+  const cur = { owner: 'o', repo: 'r', token: 'secret' };
+  const merged = keepToken({ kv: { contentSync: { owner: 'o2', repo: 'r2' } } }, cur);
+  assert.deepEqual(merged.kv.contentSync, { owner: 'o2', repo: 'r2', token: 'secret' });
+  const none = keepToken({ kv: {} }, cur);
+  assert.equal(none.kv.contentSync.token, 'secret');
+  const noCur = keepToken({ kv: { a: 1 } }, undefined);
+  assert.deepEqual(noCur.kv, { a: 1 });
+});

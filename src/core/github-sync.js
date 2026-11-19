@@ -1,12 +1,14 @@
 // Pull content packs from a GitHub repo's packs/ folder into the store. Pure apart from the injected fetch.
 import { parsePack } from '../library/library.js';
 
+const API = 'https://api.github.com';
+
 export async function syncPacks({ owner, repo, token }, store, fetchFn = fetch) {
   const out = { added: [], updated: [], skipped: [], errors: [] };
   const headers = (accept) => ({ Authorization: `Bearer ${token}`, Accept: accept });
   let list;
   try {
-    const res = await fetchFn(`https://api.github.com/repos/${owner}/${repo}/contents/packs`,
+    const res = await fetchFn(`${API}/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/contents/packs`,
       { headers: headers('application/vnd.github+json') });
     if (res.status === 401 || res.status === 403 || res.status === 404) {
       out.errors.push('Token rejected or repo not found');
@@ -24,6 +26,7 @@ export async function syncPacks({ owner, repo, token }, store, fetchFn = fetch) 
     if (!f || f.type === 'dir' || !String(f.name).endsWith('.json')) continue;
     if (stored.some(r => r.sha && r.sha === f.sha)) { out.skipped.push(f.name); continue; }
     try {
+      if (typeof f.url !== 'string' || !f.url.startsWith(`${API}/`)) throw new Error('unexpected download address, not fetched');
       const res = await fetchFn(f.url, { headers: headers('application/vnd.github.raw+json') });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const parsed = parsePack(await res.text());

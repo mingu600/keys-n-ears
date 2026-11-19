@@ -1,4 +1,4 @@
-import { filterByGenre, parsePack, parseImport } from '../library/library.js';
+import { filterByGenre, parsePack, parseImport, withoutToken, keepToken } from '../library/library.js';
 import { syncPacks } from '../core/github-sync.js';
 import { h, download } from './dom.js';
 
@@ -93,8 +93,7 @@ export function mount(el, params, ctx) {
   async function doExport() {
     try {
       const data = await ctx.store.exportAll();
-      if (data.kv?.contentSync?.token) data.kv = { ...data.kv, contentSync: { ...data.kv.contentSync, token: '' } }; // never write the token to a file
-      download(`keys-n-ears-backup-${new Date().toISOString().slice(0, 10)}.json`, JSON.stringify(data, null, 2));
+      download(`keys-n-ears-backup-${new Date().toISOString().slice(0, 10)}.json`, JSON.stringify(withoutToken(data), null, 2)); // token never goes into a file
     } catch (e) { say(`Export failed: ${e.message}`); }
   }
 
@@ -128,7 +127,7 @@ export function mount(el, params, ctx) {
       const data = pendingImport;
       pendingImport = null;
       try {
-        await ctx.store.importAll(data, { mode });
+        await ctx.store.importAll(keepToken(data, await ctx.store.get('contentSync')), { mode });
         await refresh();
         say(`Backup imported (${mode}).`);
       } catch (err) { say(`Import failed, nothing changed: ${err.message}`); }
@@ -152,6 +151,7 @@ export function mount(el, params, ctx) {
       result.replaceChildren();
       if (!syncResult) return;
       const r = syncResult;
+      if (!r.ran) { result.append(...r.errors.map((x) => h('p', { class: 'err' }, x))); return; }
       result.append(h('p', {}, `Added ${r.added.length}, updated ${r.updated.length}, unchanged ${r.skipped.length}.`),
         ...r.errors.map((x) => h('p', { class: 'err' }, x)));
     };
@@ -162,13 +162,13 @@ export function mount(el, params, ctx) {
     const sync = h('button', { type: 'button', onclick: async () => {
       const cfg = { owner: owner.value.trim(), repo: repo.value.trim(), token: token.value.trim() };
       if (!cfg.owner || !cfg.repo || !cfg.token) {
-        syncResult = { added: [], updated: [], skipped: [], errors: ['Enter the GitHub owner, repo and token first.'] };
+        syncResult = { ran: false, added: [], updated: [], skipped: [], errors: ['Enter the GitHub owner, repo and token first.'] };
         showResult();
         return;
       }
       await ctx.store.set('contentSync', cfg);
       sync.disabled = true;
-      try { syncResult = await syncPacks(cfg, ctx.store); await refresh(); } finally { sync.disabled = false; }
+      try { syncResult = { ran: true, ...(await syncPacks(cfg, ctx.store)) }; await refresh(); } finally { sync.disabled = false; }
       showResult();
     } }, 'Sync');
     box.append(

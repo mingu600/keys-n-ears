@@ -165,7 +165,7 @@ export function mount(el, params, ctx) {
   }
 
   // ---------- YouTube + tap-sync ----------
-  let player = null, notEmbeddable = false, tapping = false, taps = [], occ = 0, rate = 1, tapNote = '';
+  let player = null, notEmbeddable = false, unavailable = '', tapping = false, taps = [], occ = 0, rate = 1, tapNote = '';
   const ytBox = h('div', { class: 'yt', hidden: true });
   const ytMsg = h('p', { class: 'muted', role: 'status' });
   const findLink = h('a', { class: 'button', target: '_blank', rel: 'noopener', href: '#' }, 'Find on YouTube');
@@ -185,7 +185,7 @@ export function mount(el, params, ctx) {
 
   async function setVideo(id) {
     draft.youtube.id = id;
-    notEmbeddable = false;
+    notEmbeddable = false; unavailable = '';
     stopTapping(false);
     ytBox.hidden = !id;
     if (id) {
@@ -194,10 +194,14 @@ export function mount(el, params, ctx) {
           const p = await createYouTube(ytBox);
           if (!alive) { p.destroy(); return; }
           player = p;
-          player.on('error', (code) => { if (code === 'not-embeddable') { notEmbeddable = true; renderTap(); } });
+          player.on('error', (code) => {
+            if (code === 'not-embeddable') notEmbeddable = true;
+            else unavailable = "This video can't be played in the editor (it may be private or removed); try another upload";
+            stopTapping(false); renderTap();
+          });
         }
         if (draft.youtube.id === id) player.load(id, draft.youtube.offset ?? 0);
-      } catch (e) { ytMsg.textContent = e.message; }
+      } catch (e) { unavailable = `The YouTube player could not load (${e.message}). Check your connection, or sync later`; stopTapping(false); }
     }
     renderTap();
   }
@@ -227,8 +231,8 @@ export function mount(el, params, ctx) {
   function renderTap() {
     tapBox.replaceChildren();
     if (!draft.youtube.id) { tapBox.append(h('p', { class: 'muted' }, 'Add a YouTube link to sync')); return; }
-    if (notEmbeddable) {
-      tapBox.append(h('p', { class: 'muted' }, "This video can't be embedded; try another upload"),
+    if (notEmbeddable || unavailable) {
+      tapBox.append(h('p', { class: 'muted' }, notEmbeddable ? "This video can't be embedded; try another upload" : unavailable),
         h('a', { class: 'button', target: '_blank', rel: 'noopener', href: `https://www.youtube.com/watch?v=${draft.youtube.id}` }, 'Open on YouTube'));
       return;
     }

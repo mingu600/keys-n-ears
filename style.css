@@ -7,6 +7,7 @@
   --accent: #2f6f4f;
   --accent-soft: #d6ebdf;
   --hint: #e0a526;
+  --error: #c0392b;
   --white-key: #ffffff;
   --black-key: #222;
   --black-w: 1.4%;
@@ -20,6 +21,7 @@
     --border: #36352f;
     --accent: #5fbf8a;
     --accent-soft: #1f3a2b;
+    --error: #ff7b6b;
     --white-key: #e9e7e1;
     --black-key: #0c0c0b;
   }
@@ -177,7 +179,7 @@ textarea { width: 100%; min-height: 5rem; font-family: ui-monospace, monospace; 
 .badge.warn { border-color: var(--hint); color: var(--hint); }
 .badge.good { border-color: var(--accent); color: var(--accent); }
 a.button { display: inline-flex; align-items: center; min-height: 44px; padding: 0 0.9rem; border: 1px solid var(--border); border-radius: 6px; background: var(--panel); color: var(--fg); text-decoration: none; }
-.err { color: #c0392b; font-size: 0.85rem; margin: 0.2rem 0; }
+.err { color: var(--error); font-size: 0.85rem; margin: 0.2rem 0; }
 .row { display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; margin: 0.4rem 0; }
 .field { display: flex; flex-direction: column; gap: 0.2rem; font-size: 0.85rem; color: var(--muted); }
 .card { border: 1px solid var(--border); border-radius: 8px; padding: 0.75rem; margin: 0.5rem 0; }
