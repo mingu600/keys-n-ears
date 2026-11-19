@@ -1,0 +1,337 @@
+[
+  {
+    "id": "someone-like-you",
+    "title": "Someone Like You",
+    "artist": "Adele",
+    "genres": ["Pop"],
+    "year": 2011,
+    "key": { "tonic": "A", "mode": "major" },
+    "bpm": 67,
+    "timeSignature": [4, 4],
+    "sections": [
+      {
+        "name": "Verse",
+        "bars": [
+          ["A"],
+          ["C#m/G#"],
+          ["F#m"],
+          ["D"],
+          ["A"],
+          ["C#m/G#"],
+          ["F#m"],
+          ["D"]
+        ]
+      },
+      {
+        "name": "Chorus",
+        "bars": [
+          ["A"],
+          ["E/G#"],
+          ["F#m"],
+          ["D"],
+          ["A"],
+          ["E/G#"],
+          ["F#m"],
+          ["D"]
+        ]
+      }
+    ],
+    "form": [
+      { "section": "Verse", "start": null, "chordTimes": null },
+      { "section": "Verse", "start": null, "chordTimes": null },
+      { "section": "Chorus", "start": null, "chordTimes": null },
+      { "section": "Verse", "start": null, "chordTimes": null },
+      { "section": "Chorus", "start": null, "chordTimes": null },
+      { "section": "Chorus", "start": null, "chordTimes": null }
+    ],
+    "youtube": { "id": null, "offset": 0 },
+    "verified": false,
+    "hooks": []
+  },
+  {
+    "id": "perfect",
+    "title": "Perfect",
+    "artist": "Ed Sheeran",
+    "genres": ["Pop"],
+    "year": 2017,
+    "key": { "tonic": "Ab", "mode": "major" },
+    "bpm": 63,
+    "timeSignature": [4, 4],
+    "sections": [
+      {
+        "name": "Verse",
+        "bars": [
+          ["Ab"],
+          ["Fm"],
+          ["Db"],
+          ["Eb"],
+          ["Ab"],
+          ["Fm"],
+          ["Db"],
+          ["Eb"]
+        ]
+      },
+      {
+        "name": "Pre-Chorus",
+        "bars": [
+          ["Fm"],
+          ["Db"],
+          ["Ab"],
+          ["Eb"],
+          ["Fm"],
+          ["Db"],
+          ["Ab"],
+          ["Eb"]
+        ]
+      }
+    ],
+    "form": [
+      { "section": "Verse", "start": null, "chordTimes": null },
+      { "section": "Pre-Chorus", "start": null, "chordTimes": null },
+      { "section": "Verse", "start": null, "chordTimes": null },
+      { "section": "Pre-Chorus", "start": null, "chordTimes": null }
+    ],
+    "youtube": { "id": null, "offset": 0 },
+    "verified": false,
+    "hooks": []
+  },
+  {
+    "id": "shape-of-you",
+    "title": "Shape of You",
+    "artist": "Ed Sheeran",
+    "genres": ["Pop"],
+    "year": 2017,
+    "key": { "tonic": "C#", "mode": "minor" },
+    "bpm": 96,
+    "timeSignature": [4, 4],
+    "sections": [
+      {
+        "name": "Verse",
+        "bars": [
+          ["C#m"],
+          ["F#m"],
+          ["A"],
+          ["B"],
+          ["C#m"],
+          ["F#m"],
+          ["A"],
+          ["B"]
+        ]
+      },
+      {
+        "name": "Chorus",
+        "bars": [
+          ["C#m"],
+          ["F#m"],
+          ["A"],
+          ["B"],
+          ["C#m"],
+          ["F#m"],
+          ["A"],
+          ["B"]
+        ]
+      }
+    ],
+    "form": [
+      { "section": "Verse", "start": null, "chordTimes": null },
+      { "section": "Chorus", "start": null, "chordTimes": null },
+      { "section": "Verse", "start": null, "chordTimes": null },
+      { "section": "Chorus", "start": null, "chordTimes": null },
+      { "section": "Chorus", "start": null, "chordTimes": null }
+    ],
+    "youtube": { "id": null, "offset": 0 },
+    "verified": false,
+    "hooks": []
+  },
+  {
+    "id": "all-of-me",
+    "title": "All of Me",
+    "artist": "John Legend",
+    "genres": ["Pop", "R&B/Soul"],
+    "year": 2013,
+    "key": { "tonic": "Ab", "mode": "major" },
+    "bpm": 63,
+    "timeSignature": [4, 4],
+    "sections": [
+      {
+        "name": "Verse",
+        "bars": [
+          ["Fm"],
+          ["Db"],
+          ["Ab"],
+          ["Eb"],
+          ["Fm"],
+          ["Db"],
+          ["Ab"],
+          ["Eb"]
+        ]
+      },
+      {
+        "name": "Chorus",
+        "bars": [
+          ["Ab"],
+          ["Fm"],
+          ["Db"],
+          ["Eb"],
+          ["Ab"],
+          ["Fm"],
+          ["Db"],
+          ["Eb"]
+        ]
+      }
+    ],
+    "form": [
+      { "section": "Verse", "start": null, "chordTimes": null },
+      { "section": "Chorus", "start": null, "chordTimes": null },
+      { "section": "Verse", "start": null, "chordTimes": null },
+      { "section": "Chorus", "start": null, "chordTimes": null },
+      { "section": "Chorus", "start": null, "chordTimes": null }
+    ],
+    "youtube": { "id": null, "offset": 0 },
+    "verified": false,
+    "hooks": []
+  },
+  {
+    "id": "viva-la-vida",
+    "title": "Viva La Vida",
+    "artist": "Coldplay",
+    "genres": ["Pop", "Rock"],
+    "year": 2008,
+    "key": { "tonic": "Ab", "mode": "major" },
+    "bpm": 138,
+    "timeSignature": [4, 4],
+    "sections": [
+      {
+        "name": "Verse",
+        "bars": [
+          ["Db"],
+          ["Eb"],
+          ["Ab"],
+          ["Fm"],
+          ["Db"],
+          ["Eb"],
+          ["Ab"],
+          ["Fm"]
+        ]
+      },
+      {
+        "name": "Chorus",
+        "bars": [
+          ["Db"],
+          ["Eb"],
+          ["Ab"],
+          ["Fm"],
+          ["Db"],
+          ["Eb"],
+          ["Ab"],
+          ["Fm"]
+        ]
+      }
+    ],
+    "form": [
+      { "section": "Verse", "start": null, "chordTimes": null },
+      { "section": "Verse", "start": null, "chordTimes": null },
+      { "section": "Chorus", "start": null, "chordTimes": null },
+      { "section": "Verse", "start": null, "chordTimes": null },
+      { "section": "Chorus", "start": null, "chordTimes": null }
+    ],
+    "youtube": { "id": null, "offset": 0 },
+    "verified": false,
+    "hooks": []
+  },
+  {
+    "id": "riptide",
+    "title": "Riptide",
+    "artist": "Vance Joy",
+    "genres": ["Pop"],
+    "year": 2013,
+    "key": { "tonic": "Db", "mode": "major" },
+    "bpm": 102,
+    "timeSignature": [4, 4],
+    "sections": [
+      {
+        "name": "Verse",
+        "bars": [
+          ["Bbm"],
+          ["Ab"],
+          ["Db"],
+          ["Db"],
+          ["Bbm"],
+          ["Ab"],
+          ["Db"],
+          ["Db"]
+        ]
+      },
+      {
+        "name": "Chorus",
+        "bars": [
+          ["Bbm"],
+          ["Ab"],
+          ["Db"],
+          ["Db"],
+          ["Bbm"],
+          ["Ab"],
+          ["Db"],
+          ["Db"]
+        ]
+      }
+    ],
+    "form": [
+      { "section": "Verse", "start": null, "chordTimes": null },
+      { "section": "Chorus", "start": null, "chordTimes": null },
+      { "section": "Verse", "start": null, "chordTimes": null },
+      { "section": "Chorus", "start": null, "chordTimes": null }
+    ],
+    "youtube": { "id": null, "offset": 0 },
+    "verified": false,
+    "hooks": []
+  },
+  {
+    "id": "rolling-in-the-deep",
+    "title": "Rolling in the Deep",
+    "artist": "Adele",
+    "genres": ["Pop", "R&B/Soul"],
+    "year": 2010,
+    "key": { "tonic": "C", "mode": "minor" },
+    "bpm": 105,
+    "timeSignature": [4, 4],
+    "sections": [
+      {
+        "name": "Verse",
+        "bars": [
+          ["Cm"],
+          ["Gm"],
+          ["Bb"],
+          ["Bb"],
+          ["Cm"],
+          ["Gm"],
+          ["Bb"],
+          ["Bb"]
+        ]
+      },
+      {
+        "name": "Chorus",
+        "bars": [
+          ["Cm"],
+          ["Bb"],
+          ["Ab"],
+          ["Bb"],
+          ["Cm"],
+          ["Bb"],
+          ["Ab"],
+          ["Bb"]
+        ]
+      }
+    ],
+    "form": [
+      { "section": "Verse", "start": null, "chordTimes": null },
+      { "section": "Chorus", "start": null, "chordTimes": null },
+      { "section": "Verse", "start": null, "chordTimes": null },
+      { "section": "Chorus", "start": null, "chordTimes": null },
+      { "section": "Chorus", "start": null, "chordTimes": null }
+    ],
+    "youtube": { "id": null, "offset": 0 },
+    "verified": false,
+    "hooks": []
+  }
+]

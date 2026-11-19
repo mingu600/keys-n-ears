@@ -1,0 +1,224 @@
+[
+  {
+    "id": "to-zanarkand",
+    "title": "To Zanarkand",
+    "artist": "Nobuo Uematsu (Final Fantasy X)",
+    "genres": ["Game"],
+    "year": 2001,
+    "key": { "tonic": "A", "mode": "minor" },
+    "bpm": 72,
+    "timeSignature": [4, 4],
+    "sections": [
+      {
+        "name": "Theme",
+        "bars": [
+          ["Am"],
+          ["F"],
+          ["G"],
+          ["C"],
+          ["Am"],
+          ["F"],
+          ["E"],
+          ["E"]
+        ]
+      }
+    ],
+    "form": [
+      { "section": "Theme", "start": null, "chordTimes": null },
+      { "section": "Theme", "start": null, "chordTimes": null }
+    ],
+    "youtube": { "id": null, "offset": 0 },
+    "verified": false,
+    "hooks": []
+  },
+  {
+    "id": "aeriths-theme",
+    "title": "Aerith's Theme",
+    "artist": "Nobuo Uematsu (Final Fantasy VII)",
+    "genres": ["Game"],
+    "year": 1997,
+    "key": { "tonic": "D", "mode": "major" },
+    "bpm": 72,
+    "timeSignature": [4, 4],
+    "sections": [
+      {
+        "name": "Theme",
+        "bars": [
+          ["D"],
+          ["A/C#"],
+          ["Bm"],
+          ["F#m/A"],
+          ["G"],
+          ["D/F#"],
+          ["Em"],
+          ["A"]
+        ]
+      }
+    ],
+    "form": [
+      { "section": "Theme", "start": null, "chordTimes": null },
+      { "section": "Theme", "start": null, "chordTimes": null }
+    ],
+    "youtube": { "id": null, "offset": 0 },
+    "verified": false,
+    "hooks": []
+  },
+  {
+    "id": "dearly-beloved",
+    "title": "Dearly Beloved",
+    "artist": "Yoko Shimomura (Kingdom Hearts)",
+    "genres": ["Game"],
+    "year": 2002,
+    "key": { "tonic": "C", "mode": "major" },
+    "bpm": 80,
+    "timeSignature": [4, 4],
+    "sections": [
+      {
+        "name": "Theme",
+        "bars": [
+          ["F"],
+          ["G"],
+          ["Em"],
+          ["Am"],
+          ["F"],
+          ["G"],
+          ["C"],
+          ["C"]
+        ]
+      }
+    ],
+    "form": [
+      { "section": "Theme", "start": null, "chordTimes": null },
+      { "section": "Theme", "start": null, "chordTimes": null }
+    ],
+    "youtube": { "id": null, "offset": 0 },
+    "verified": false,
+    "hooks": []
+  },
+  {
+    "id": "megalovania",
+    "title": "Megalovania",
+    "artist": "Toby Fox (Undertale)",
+    "genres": ["Game"],
+    "year": 2015,
+    "key": { "tonic": "D", "mode": "minor" },
+    "bpm": 120,
+    "timeSignature": [4, 4],
+    "sections": [
+      {
+        "name": "Riff",
+        "bars": [
+          ["Dm"],
+          ["C"],
+          ["Bm7b5"],
+          ["Bb"]
+        ]
+      }
+    ],
+    "form": [
+      { "section": "Riff", "start": null, "chordTimes": null },
+      { "section": "Riff", "start": null, "chordTimes": null },
+      { "section": "Riff", "start": null, "chordTimes": null },
+      { "section": "Riff", "start": null, "chordTimes": null }
+    ],
+    "youtube": { "id": null, "offset": 0 },
+    "verified": false,
+    "hooks": []
+  },
+  {
+    "id": "song-of-storms",
+    "title": "Song of Storms",
+    "artist": "Koji Kondo (Zelda: Ocarina of Time)",
+    "genres": ["Game"],
+    "year": 1998,
+    "key": { "tonic": "D", "mode": "minor" },
+    "bpm": 160,
+    "timeSignature": [3, 4],
+    "sections": [
+      {
+        "name": "Theme",
+        "bars": [
+          ["Dm"],
+          ["Dm"],
+          ["C"],
+          ["C"],
+          ["Dm"],
+          ["Dm"],
+          ["C"],
+          ["Dm"]
+        ]
+      }
+    ],
+    "form": [
+      { "section": "Theme", "start": null, "chordTimes": null },
+      { "section": "Theme", "start": null, "chordTimes": null }
+    ],
+    "youtube": { "id": null, "offset": 0 },
+    "verified": false,
+    "hooks": []
+  },
+  {
+    "id": "corridors-of-time",
+    "title": "Corridors of Time",
+    "artist": "Yasunori Mitsuda (Chrono Trigger)",
+    "genres": ["Game"],
+    "year": 1995,
+    "key": { "tonic": "A", "mode": "minor" },
+    "bpm": 100,
+    "timeSignature": [4, 4],
+    "sections": [
+      {
+        "name": "Theme",
+        "bars": [
+          ["Am"],
+          ["G"],
+          ["F"],
+          ["E"],
+          ["Am"],
+          ["G"],
+          ["F"],
+          ["E"]
+        ]
+      }
+    ],
+    "form": [
+      { "section": "Theme", "start": null, "chordTimes": null },
+      { "section": "Theme", "start": null, "chordTimes": null }
+    ],
+    "youtube": { "id": null, "offset": 0 },
+    "verified": false,
+    "hooks": []
+  },
+  {
+    "id": "still-alive",
+    "title": "Still Alive",
+    "artist": "Jonathan Coulton (Portal)",
+    "genres": ["Game"],
+    "year": 2007,
+    "key": { "tonic": "G", "mode": "major" },
+    "bpm": 120,
+    "timeSignature": [4, 4],
+    "sections": [
+      {
+        "name": "Verse",
+        "bars": [
+          ["G"],
+          ["Bm"],
+          ["Em"],
+          ["C"],
+          ["G"],
+          ["Bm"],
+          ["Em"],
+          ["C"]
+        ]
+      }
+    ],
+    "form": [
+      { "section": "Verse", "start": null, "chordTimes": null },
+      { "section": "Verse", "start": null, "chordTimes": null }
+    ],
+    "youtube": { "id": null, "offset": 0 },
+    "verified": false,
+    "hooks": []
+  }
+]

@@ -1,0 +1,421 @@
+[
+  {
+    "id": "autumn-leaves",
+    "title": "Autumn Leaves",
+    "artist": "Joseph Kosma (standard)",
+    "genres": ["Jazz"],
+    "year": 1945,
+    "key": { "tonic": "G", "mode": "minor" },
+    "bpm": 120,
+    "timeSignature": [4, 4],
+    "sections": [
+      {
+        "name": "A",
+        "bars": [
+          ["Cm7"],
+          ["F7"],
+          ["Bbmaj7"],
+          ["Ebmaj7"],
+          ["Am7b5"],
+          ["D7"],
+          ["Gm"],
+          ["Gm"]
+        ]
+      },
+      {
+        "name": "B",
+        "bars": [
+          ["Am7b5"],
+          ["D7"],
+          ["Gm"],
+          ["Gm"],
+          ["Cm7"],
+          ["F7"],
+          ["Bbmaj7"],
+          ["Ebmaj7"]
+        ]
+      },
+      {
+        "name": "C",
+        "bars": [
+          ["Am7b5"],
+          ["D7"],
+          ["Gm7", "C7"],
+          ["Fm7", "Bb7"],
+          ["Ebmaj7"],
+          ["Am7b5", "D7"],
+          ["Gm"],
+          ["Gm"]
+        ]
+      }
+    ],
+    "form": [
+      { "section": "A", "start": null, "chordTimes": null },
+      { "section": "A", "start": null, "chordTimes": null },
+      { "section": "B", "start": null, "chordTimes": null },
+      { "section": "C", "start": null, "chordTimes": null }
+    ],
+    "youtube": { "id": null, "offset": 0 },
+    "verified": false,
+    "hooks": []
+  },
+  {
+    "id": "fly-me-to-the-moon",
+    "title": "Fly Me to the Moon",
+    "artist": "Bart Howard (standard)",
+    "genres": ["Jazz"],
+    "year": 1954,
+    "key": { "tonic": "C", "mode": "major" },
+    "bpm": 120,
+    "timeSignature": [4, 4],
+    "sections": [
+      {
+        "name": "A",
+        "bars": [
+          ["Am7"],
+          ["Dm7"],
+          ["G7"],
+          ["Cmaj7", "C7"],
+          ["Fmaj7"],
+          ["Bm7b5"],
+          ["E7"],
+          ["Am7", "A7"]
+        ]
+      },
+      {
+        "name": "B",
+        "bars": [
+          ["Dm7"],
+          ["G7"],
+          ["Em7", "A7"],
+          ["Dm7"],
+          ["G7"],
+          ["Cmaj7"],
+          ["Bm7b5"],
+          ["E7"]
+        ]
+      }
+    ],
+    "form": [
+      { "section": "A", "start": null, "chordTimes": null },
+      { "section": "B", "start": null, "chordTimes": null },
+      { "section": "A", "start": null, "chordTimes": null },
+      { "section": "B", "start": null, "chordTimes": null }
+    ],
+    "youtube": { "id": null, "offset": 0 },
+    "verified": false,
+    "hooks": []
+  },
+  {
+    "id": "all-the-things-you-are",
+    "title": "All the Things You Are",
+    "artist": "Jerome Kern (standard)",
+    "genres": ["Jazz"],
+    "year": 1939,
+    "key": { "tonic": "Ab", "mode": "major" },
+    "bpm": 130,
+    "timeSignature": [4, 4],
+    "sections": [
+      {
+        "name": "A1",
+        "bars": [
+          ["Fm7"],
+          ["Bbm7"],
+          ["Eb7"],
+          ["Abmaj7"],
+          ["Dbmaj7"],
+          ["G7"],
+          ["Cmaj7"],
+          ["Cmaj7"]
+        ]
+      },
+      {
+        "name": "A2",
+        "bars": [
+          ["Cm7"],
+          ["Fm7"],
+          ["Bb7"],
+          ["Ebmaj7"],
+          ["Abmaj7"],
+          ["D7"],
+          ["Gmaj7"],
+          ["Gmaj7"]
+        ],
+        "key": { "tonic": "Eb", "mode": "major" }
+      },
+      {
+        "name": "B",
+        "bars": [
+          ["Am7"],
+          ["D7"],
+          ["Gmaj7"],
+          ["Gmaj7"],
+          ["F#m7b5"],
+          ["B7"],
+          ["Emaj7"],
+          ["C7"]
+        ],
+        "key": { "tonic": "G", "mode": "major" }
+      },
+      {
+        "name": "A3",
+        "bars": [
+          ["Fm7"],
+          ["Bbm7"],
+          ["Eb7"],
+          ["Abmaj7"],
+          ["Dbmaj7"],
+          ["Dbm7"],
+          ["Cm7"],
+          ["Bdim7"],
+          ["Bbm7"],
+          ["Eb7"],
+          ["Abmaj7"],
+          ["Gm7b5", "C7"]
+        ]
+      }
+    ],
+    "form": [
+      { "section": "A1", "start": null, "chordTimes": null },
+      { "section": "A2", "start": null, "chordTimes": null },
+      { "section": "B", "start": null, "chordTimes": null },
+      { "section": "A3", "start": null, "chordTimes": null }
+    ],
+    "youtube": { "id": null, "offset": 0 },
+    "verified": false,
+    "hooks": []
+  },
+  {
+    "id": "blue-bossa",
+    "title": "Blue Bossa",
+    "artist": "Kenny Dorham",
+    "genres": ["Jazz"],
+    "year": 1963,
+    "key": { "tonic": "C", "mode": "minor" },
+    "bpm": 140,
+    "timeSignature": [4, 4],
+    "sections": [
+      {
+        "name": "A",
+        "bars": [
+          ["Cm7"],
+          ["Cm7"],
+          ["Fm7"],
+          ["Fm7"],
+          ["Dm7b5"],
+          ["G7"],
+          ["Cm7"],
+          ["Cm7"]
+        ]
+      },
+      {
+        "name": "B",
+        "bars": [
+          ["Ebm7"],
+          ["Ab7"],
+          ["Dbmaj7"],
+          ["Dbmaj7"],
+          ["Dm7b5"],
+          ["G7"],
+          ["Cm7"],
+          ["Dm7b5", "G7"]
+        ]
+      }
+    ],
+    "form": [
+      { "section": "A", "start": null, "chordTimes": null },
+      { "section": "B", "start": null, "chordTimes": null }
+    ],
+    "youtube": { "id": null, "offset": 0 },
+    "verified": false,
+    "hooks": []
+  },
+  {
+    "id": "take-the-a-train",
+    "title": "Take the \"A\" Train",
+    "artist": "Billy Strayhorn (Duke Ellington Orchestra)",
+    "genres": ["Jazz"],
+    "year": 1939,
+    "key": { "tonic": "C", "mode": "major" },
+    "bpm": 160,
+    "timeSignature": [4, 4],
+    "sections": [
+      {
+        "name": "A",
+        "bars": [
+          ["C6"],
+          ["C6"],
+          ["D7"],
+          ["D7"],
+          ["Dm7"],
+          ["G7"],
+          ["C6"],
+          ["Dm7", "G7"]
+        ]
+      },
+      {
+        "name": "A2",
+        "bars": [
+          ["C6"],
+          ["C6"],
+          ["D7"],
+          ["D7"],
+          ["Dm7"],
+          ["G7"],
+          ["C6"],
+          ["C6"]
+        ]
+      },
+      {
+        "name": "B",
+        "bars": [
+          ["Fmaj7"],
+          ["Fmaj7"],
+          ["Fmaj7"],
+          ["Fmaj7"],
+          ["D7"],
+          ["D7"],
+          ["Dm7"],
+          ["G7"]
+        ]
+      }
+    ],
+    "form": [
+      { "section": "A", "start": null, "chordTimes": null },
+      { "section": "A2", "start": null, "chordTimes": null },
+      { "section": "B", "start": null, "chordTimes": null },
+      { "section": "A2", "start": null, "chordTimes": null }
+    ],
+    "youtube": { "id": null, "offset": 0 },
+    "verified": false,
+    "hooks": []
+  },
+  {
+    "id": "misty",
+    "title": "Misty",
+    "artist": "Erroll Garner",
+    "genres": ["Jazz"],
+    "year": 1954,
+    "key": { "tonic": "Eb", "mode": "major" },
+    "bpm": 64,
+    "timeSignature": [4, 4],
+    "sections": [
+      {
+        "name": "A1",
+        "bars": [
+          ["Ebmaj7"],
+          ["Bbm7", "Eb7"],
+          ["Abmaj7"],
+          ["Abm7", "Db7"],
+          ["Ebmaj7", "Cm7"],
+          ["Fm7", "Bb7"],
+          ["Gm7", "C7"],
+          ["Fm7", "Bb7"]
+        ]
+      },
+      {
+        "name": "A2",
+        "bars": [
+          ["Ebmaj7"],
+          ["Bbm7", "Eb7"],
+          ["Abmaj7"],
+          ["Abm7", "Db7"],
+          ["Ebmaj7", "Cm7"],
+          ["Fm7", "Bb7"],
+          ["Eb6"],
+          ["Bbm7", "Eb7"]
+        ]
+      },
+      {
+        "name": "B",
+        "bars": [
+          ["Bbm7"],
+          ["Eb7"],
+          ["Abmaj7"],
+          ["Abmaj7"],
+          ["Am7"],
+          ["D7"],
+          ["Gm7", "C7"],
+          ["Fm7", "Bb7"]
+        ]
+      }
+    ],
+    "form": [
+      { "section": "A1", "start": null, "chordTimes": null },
+      { "section": "A2", "start": null, "chordTimes": null },
+      { "section": "B", "start": null, "chordTimes": null },
+      { "section": "A2", "start": null, "chordTimes": null }
+    ],
+    "youtube": { "id": null, "offset": 0 },
+    "verified": false,
+    "hooks": []
+  },
+  {
+    "id": "the-girl-from-ipanema",
+    "title": "The Girl from Ipanema",
+    "artist": "Antonio Carlos Jobim",
+    "genres": ["Jazz"],
+    "year": 1964,
+    "key": { "tonic": "F", "mode": "major" },
+    "bpm": 130,
+    "timeSignature": [4, 4],
+    "sections": [
+      {
+        "name": "A",
+        "bars": [
+          ["Fmaj7"],
+          ["Fmaj7"],
+          ["G7"],
+          ["G7"],
+          ["Gm7"],
+          ["Gb7"],
+          ["Fmaj7"],
+          ["Gb7"]
+        ]
+      },
+      {
+        "name": "A2",
+        "bars": [
+          ["Fmaj7"],
+          ["Fmaj7"],
+          ["G7"],
+          ["G7"],
+          ["Gm7"],
+          ["Gb7"],
+          ["Fmaj7"],
+          ["Fmaj7"]
+        ]
+      },
+      {
+        "name": "B",
+        "bars": [
+          ["Gbmaj7"],
+          ["Gbmaj7"],
+          ["B7"],
+          ["B7"],
+          ["F#m7"],
+          ["F#m7"],
+          ["D7"],
+          ["D7"],
+          ["Gm7"],
+          ["Gm7"],
+          ["Eb7"],
+          ["Eb7"],
+          ["Am7"],
+          ["D7"],
+          ["Gm7"],
+          ["C7"]
+        ]
+      }
+    ],
+    "form": [
+      { "section": "A", "start": null, "chordTimes": null },
+      { "section": "A2", "start": null, "chordTimes": null },
+      { "section": "B", "start": null, "chordTimes": null },
+      { "section": "A2", "start": null, "chordTimes": null }
+    ],
+    "youtube": { "id": null, "offset": 0 },
+    "verified": false,
+    "hooks": []
+  }
+]

@@ -1,0 +1,350 @@
+[
+  {
+    "id": "let-it-be",
+    "title": "Let It Be",
+    "artist": "The Beatles",
+    "genres": ["Rock", "Pop"],
+    "year": 1970,
+    "key": { "tonic": "C", "mode": "major" },
+    "bpm": 72,
+    "timeSignature": [4, 4],
+    "sections": [
+      {
+        "name": "Intro",
+        "bars": [
+          ["C", "G"],
+          ["Am", "F"],
+          ["C", "G"],
+          ["F", "C"]
+        ]
+      },
+      {
+        "name": "Verse",
+        "bars": [
+          ["C", "G"],
+          ["Am", "F"],
+          ["C", "G"],
+          ["F", "C"],
+          ["C", "G"],
+          ["Am", "F"],
+          ["C", "G"],
+          ["F", "C"]
+        ]
+      },
+      {
+        "name": "Chorus",
+        "bars": [
+          ["Am", "G"],
+          ["F", "C"],
+          ["C", "G"],
+          ["F", "C"]
+        ]
+      }
+    ],
+    "form": [
+      { "section": "Intro", "start": null, "chordTimes": null },
+      { "section": "Verse", "start": null, "chordTimes": null },
+      { "section": "Chorus", "start": null, "chordTimes": null },
+      { "section": "Verse", "start": null, "chordTimes": null },
+      { "section": "Chorus", "start": null, "chordTimes": null },
+      { "section": "Chorus", "start": null, "chordTimes": null },
+      { "section": "Verse", "start": null, "chordTimes": null },
+      { "section": "Chorus", "start": null, "chordTimes": null },
+      { "section": "Verse", "start": null, "chordTimes": null },
+      { "section": "Chorus", "start": null, "chordTimes": null },
+      { "section": "Chorus", "start": null, "chordTimes": null }
+    ],
+    "youtube": { "id": null, "offset": 0 },
+    "verified": false,
+    "hooks": []
+  },
+  {
+    "id": "hey-jude",
+    "title": "Hey Jude",
+    "artist": "The Beatles",
+    "genres": ["Rock", "Pop"],
+    "year": 1968,
+    "key": { "tonic": "F", "mode": "major" },
+    "bpm": 74,
+    "timeSignature": [4, 4],
+    "sections": [
+      {
+        "name": "Verse",
+        "bars": [
+          ["F"],
+          ["C"],
+          ["C7"],
+          ["F"],
+          ["Bb"],
+          ["F"],
+          ["C7"],
+          ["F"]
+        ]
+      },
+      {
+        "name": "Outro",
+        "bars": [
+          ["F"],
+          ["Eb"],
+          ["Bb"],
+          ["F"]
+        ]
+      }
+    ],
+    "form": [
+      { "section": "Verse", "start": null, "chordTimes": null },
+      { "section": "Verse", "start": null, "chordTimes": null },
+      { "section": "Verse", "start": null, "chordTimes": null },
+      { "section": "Verse", "start": null, "chordTimes": null },
+      { "section": "Outro", "start": null, "chordTimes": null },
+      { "section": "Outro", "start": null, "chordTimes": null },
+      { "section": "Outro", "start": null, "chordTimes": null },
+      { "section": "Outro", "start": null, "chordTimes": null }
+    ],
+    "youtube": { "id": null, "offset": 0 },
+    "verified": false,
+    "hooks": []
+  },
+  {
+    "id": "dont-stop-believin",
+    "title": "Don't Stop Believin'",
+    "artist": "Journey",
+    "genres": ["Rock"],
+    "year": 1981,
+    "key": { "tonic": "E", "mode": "major" },
+    "bpm": 119,
+    "timeSignature": [4, 4],
+    "sections": [
+      {
+        "name": "Intro",
+        "bars": [
+          ["E"],
+          ["B"],
+          ["C#m"],
+          ["A"],
+          ["E"],
+          ["B"],
+          ["G#m"],
+          ["A"]
+        ]
+      },
+      {
+        "name": "Verse",
+        "bars": [
+          ["E"],
+          ["B"],
+          ["C#m"],
+          ["A"],
+          ["E"],
+          ["B"],
+          ["G#m"],
+          ["A"]
+        ]
+      },
+      {
+        "name": "Chorus",
+        "bars": [
+          ["E"],
+          ["B"],
+          ["C#m"],
+          ["A"],
+          ["E"],
+          ["B"],
+          ["G#m"],
+          ["A"]
+        ]
+      }
+    ],
+    "form": [
+      { "section": "Intro", "start": null, "chordTimes": null },
+      { "section": "Verse", "start": null, "chordTimes": null },
+      { "section": "Verse", "start": null, "chordTimes": null },
+      { "section": "Chorus", "start": null, "chordTimes": null },
+      { "section": "Chorus", "start": null, "chordTimes": null }
+    ],
+    "youtube": { "id": null, "offset": 0 },
+    "verified": false,
+    "hooks": []
+  },
+  {
+    "id": "wonderwall",
+    "title": "Wonderwall",
+    "artist": "Oasis",
+    "genres": ["Rock"],
+    "year": 1995,
+    "key": { "tonic": "F#", "mode": "minor" },
+    "bpm": 87,
+    "timeSignature": [4, 4],
+    "sections": [
+      {
+        "name": "Intro",
+        "bars": [
+          ["F#m7"],
+          ["A"],
+          ["Esus4"],
+          ["B7sus4"]
+        ]
+      },
+      {
+        "name": "Verse",
+        "bars": [
+          ["F#m7"],
+          ["A"],
+          ["Esus4"],
+          ["B7sus4"],
+          ["F#m7"],
+          ["A"],
+          ["Esus4"],
+          ["B7sus4"]
+        ]
+      },
+      {
+        "name": "Chorus",
+        "bars": [
+          ["Dadd9"],
+          ["F#m7"],
+          ["A"],
+          ["F#m7"],
+          ["Dadd9"],
+          ["F#m7"],
+          ["A"],
+          ["F#m7"]
+        ]
+      }
+    ],
+    "form": [
+      { "section": "Intro", "start": null, "chordTimes": null },
+      { "section": "Verse", "start": null, "chordTimes": null },
+      { "section": "Verse", "start": null, "chordTimes": null },
+      { "section": "Chorus", "start": null, "chordTimes": null },
+      { "section": "Verse", "start": null, "chordTimes": null },
+      { "section": "Chorus", "start": null, "chordTimes": null }
+    ],
+    "youtube": { "id": null, "offset": 0 },
+    "verified": false,
+    "hooks": []
+  },
+  {
+    "id": "imagine",
+    "title": "Imagine",
+    "artist": "John Lennon",
+    "genres": ["Rock", "Pop"],
+    "year": 1971,
+    "key": { "tonic": "C", "mode": "major" },
+    "bpm": 76,
+    "timeSignature": [4, 4],
+    "sections": [
+      {
+        "name": "Verse",
+        "bars": [
+          ["C", "Cmaj7"],
+          ["F"],
+          ["C", "Cmaj7"],
+          ["F"],
+          ["C", "Cmaj7"],
+          ["F"],
+          ["C", "Cmaj7"],
+          ["F"]
+        ]
+      },
+      {
+        "name": "Chorus",
+        "bars": [
+          ["F"],
+          ["G"],
+          ["C"],
+          ["E7"],
+          ["F"],
+          ["G"],
+          ["C"],
+          ["C"]
+        ]
+      }
+    ],
+    "form": [
+      { "section": "Verse", "start": null, "chordTimes": null },
+      { "section": "Chorus", "start": null, "chordTimes": null },
+      { "section": "Verse", "start": null, "chordTimes": null },
+      { "section": "Chorus", "start": null, "chordTimes": null }
+    ],
+    "youtube": { "id": null, "offset": 0 },
+    "verified": false,
+    "hooks": []
+  },
+  {
+    "id": "africa",
+    "title": "Africa",
+    "artist": "Toto",
+    "genres": ["Rock", "Pop"],
+    "year": 1982,
+    "key": { "tonic": "A", "mode": "major" },
+    "bpm": 93,
+    "timeSignature": [4, 4],
+    "sections": [
+      {
+        "name": "Chorus",
+        "bars": [
+          ["F#m"],
+          ["D"],
+          ["A"],
+          ["E"],
+          ["F#m"],
+          ["D"],
+          ["A"],
+          ["E"]
+        ]
+      }
+    ],
+    "form": [
+      { "section": "Chorus", "start": null, "chordTimes": null },
+      { "section": "Chorus", "start": null, "chordTimes": null }
+    ],
+    "youtube": { "id": null, "offset": 0 },
+    "verified": false,
+    "hooks": []
+  },
+  {
+    "id": "clocks",
+    "title": "Clocks",
+    "artist": "Coldplay",
+    "genres": ["Rock", "Pop"],
+    "year": 2002,
+    "key": { "tonic": "Eb", "mode": "major" },
+    "bpm": 131,
+    "timeSignature": [4, 4],
+    "sections": [
+      {
+        "name": "Riff",
+        "bars": [
+          ["Eb"],
+          ["Bbm"],
+          ["Bbm"],
+          ["Fm"]
+        ]
+      },
+      {
+        "name": "Verse",
+        "bars": [
+          ["Eb"],
+          ["Bbm"],
+          ["Bbm"],
+          ["Fm"],
+          ["Eb"],
+          ["Bbm"],
+          ["Bbm"],
+          ["Fm"]
+        ]
+      }
+    ],
+    "form": [
+      { "section": "Riff", "start": null, "chordTimes": null },
+      { "section": "Riff", "start": null, "chordTimes": null },
+      { "section": "Verse", "start": null, "chordTimes": null },
+      { "section": "Riff", "start": null, "chordTimes": null },
+      { "section": "Verse", "start": null, "chordTimes": null }
+    ],
+    "youtube": { "id": null, "offset": 0 },
+    "verified": false,
+    "hooks": []
+  }
+]

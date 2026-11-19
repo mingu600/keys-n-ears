@@ -1,0 +1,226 @@
+[
+  {
+    "id": "gurenge",
+    "title": "Gurenge",
+    "artist": "LiSA",
+    "genres": ["J-pop/Anime"],
+    "year": 2019,
+    "key": { "tonic": "Eb", "mode": "minor" },
+    "bpm": 135,
+    "timeSignature": [4, 4],
+    "sections": [
+      {
+        "name": "Chorus",
+        "bars": [
+          ["Cb"],
+          ["Db"],
+          ["Bbm"],
+          ["Ebm"],
+          ["Cb"],
+          ["Db"],
+          ["Bbm"],
+          ["Ebm"]
+        ]
+      }
+    ],
+    "form": [
+      { "section": "Chorus", "start": null, "chordTimes": null },
+      { "section": "Chorus", "start": null, "chordTimes": null }
+    ],
+    "youtube": { "id": null, "offset": 0 },
+    "verified": false,
+    "hooks": []
+  },
+  {
+    "id": "unravel",
+    "title": "Unravel",
+    "artist": "TK from Ling tosite sigure",
+    "genres": ["J-pop/Anime", "Rock"],
+    "year": 2014,
+    "key": { "tonic": "B", "mode": "minor" },
+    "bpm": 135,
+    "timeSignature": [4, 4],
+    "sections": [
+      {
+        "name": "Chorus",
+        "bars": [
+          ["G"],
+          ["A"],
+          ["F#m"],
+          ["Bm"],
+          ["G"],
+          ["A"],
+          ["F#m"],
+          ["Bm"]
+        ]
+      }
+    ],
+    "form": [
+      { "section": "Chorus", "start": null, "chordTimes": null },
+      { "section": "Chorus", "start": null, "chordTimes": null }
+    ],
+    "youtube": { "id": null, "offset": 0 },
+    "verified": false,
+    "hooks": []
+  },
+  {
+    "id": "lemon",
+    "title": "Lemon",
+    "artist": "Kenshi Yonezu",
+    "genres": ["J-pop/Anime"],
+    "year": 2018,
+    "key": { "tonic": "Bb", "mode": "major" },
+    "bpm": 87,
+    "timeSignature": [4, 4],
+    "sections": [
+      {
+        "name": "Chorus",
+        "bars": [
+          ["Eb"],
+          ["F"],
+          ["Dm"],
+          ["Gm"],
+          ["Eb"],
+          ["F"],
+          ["Bb"],
+          ["Bb"]
+        ]
+      }
+    ],
+    "form": [
+      { "section": "Chorus", "start": null, "chordTimes": null },
+      { "section": "Chorus", "start": null, "chordTimes": null }
+    ],
+    "youtube": { "id": null, "offset": 0 },
+    "verified": false,
+    "hooks": []
+  },
+  {
+    "id": "yoru-ni-kakeru",
+    "title": "Yoru ni Kakeru",
+    "artist": "YOASOBI",
+    "genres": ["J-pop/Anime"],
+    "year": 2019,
+    "key": { "tonic": "Eb", "mode": "major" },
+    "bpm": 130,
+    "timeSignature": [4, 4],
+    "sections": [
+      {
+        "name": "Chorus",
+        "bars": [
+          ["Abmaj7"],
+          ["Bb7"],
+          ["Gm7"],
+          ["Cm7"],
+          ["Abmaj7"],
+          ["Bb7"],
+          ["Gm7"],
+          ["Cm7"]
+        ]
+      }
+    ],
+    "form": [
+      { "section": "Chorus", "start": null, "chordTimes": null },
+      { "section": "Chorus", "start": null, "chordTimes": null }
+    ],
+    "youtube": { "id": null, "offset": 0 },
+    "verified": false,
+    "hooks": []
+  },
+  {
+    "id": "sparkle",
+    "title": "Sparkle",
+    "artist": "RADWIMPS",
+    "genres": ["J-pop/Anime", "Rock"],
+    "year": 2016,
+    "key": { "tonic": "D", "mode": "major" },
+    "bpm": 150,
+    "timeSignature": [4, 4],
+    "sections": [
+      {
+        "name": "Chorus",
+        "bars": [
+          ["G"],
+          ["A"],
+          ["F#m"],
+          ["Bm"],
+          ["G"],
+          ["A"],
+          ["D"],
+          ["D"]
+        ]
+      }
+    ],
+    "form": [
+      { "section": "Chorus", "start": null, "chordTimes": null },
+      { "section": "Chorus", "start": null, "chordTimes": null }
+    ],
+    "youtube": { "id": null, "offset": 0 },
+    "verified": false,
+    "hooks": []
+  },
+  {
+    "id": "a-cruel-angels-thesis",
+    "title": "A Cruel Angel's Thesis",
+    "artist": "Yoko Takahashi",
+    "genres": ["J-pop/Anime"],
+    "year": 1995,
+    "key": { "tonic": "C", "mode": "minor" },
+    "bpm": 128,
+    "timeSignature": [4, 4],
+    "sections": [
+      {
+        "name": "Chorus",
+        "bars": [
+          ["Cm"],
+          ["Fm"],
+          ["Bb"],
+          ["Eb"],
+          ["Ab"],
+          ["Fm"],
+          ["G"],
+          ["Cm"]
+        ]
+      }
+    ],
+    "form": [
+      { "section": "Chorus", "start": null, "chordTimes": null },
+      { "section": "Chorus", "start": null, "chordTimes": null }
+    ],
+    "youtube": { "id": null, "offset": 0 },
+    "verified": false,
+    "hooks": []
+  },
+  {
+    "id": "silhouette",
+    "title": "Silhouette",
+    "artist": "KANA-BOON",
+    "genres": ["J-pop/Anime", "Rock"],
+    "year": 2014,
+    "key": { "tonic": "D", "mode": "major" },
+    "bpm": 190,
+    "timeSignature": [4, 4],
+    "sections": [
+      {
+        "name": "Chorus",
+        "bars": [
+          ["G"],
+          ["A"],
+          ["Bm"],
+          ["D"],
+          ["G"],
+          ["A"],
+          ["D"],
+          ["D"]
+        ]
+      }
+    ],
+    "form": [
+      { "section": "Chorus", "start": null, "chordTimes": null },
+      { "section": "Chorus", "start": null, "chordTimes": null }
+    ],
+    "youtube": { "id": null, "offset": 0 },
+    "verified": false,
+    "hooks": []
+  }
+]

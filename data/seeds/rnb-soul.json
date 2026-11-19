@@ -1,0 +1,257 @@
+[
+  {
+    "id": "stand-by-me",
+    "title": "Stand By Me",
+    "artist": "Ben E. King",
+    "genres": ["R&B/Soul"],
+    "year": 1961,
+    "key": { "tonic": "A", "mode": "major" },
+    "bpm": 118,
+    "timeSignature": [4, 4],
+    "sections": [
+      {
+        "name": "Verse",
+        "bars": [
+          ["A"],
+          ["A"],
+          ["F#m"],
+          ["F#m"],
+          ["D"],
+          ["E"],
+          ["A"],
+          ["A"]
+        ]
+      },
+      {
+        "name": "Chorus",
+        "bars": [
+          ["A"],
+          ["A"],
+          ["F#m"],
+          ["F#m"],
+          ["D"],
+          ["E"],
+          ["A"],
+          ["A"]
+        ]
+      }
+    ],
+    "form": [
+      { "section": "Verse", "start": null, "chordTimes": null },
+      { "section": "Verse", "start": null, "chordTimes": null },
+      { "section": "Chorus", "start": null, "chordTimes": null },
+      { "section": "Verse", "start": null, "chordTimes": null },
+      { "section": "Chorus", "start": null, "chordTimes": null }
+    ],
+    "youtube": { "id": null, "offset": 0 },
+    "verified": false,
+    "hooks": []
+  },
+  {
+    "id": "just-the-two-of-us",
+    "title": "Just the Two of Us",
+    "artist": "Grover Washington Jr. ft. Bill Withers",
+    "genres": ["R&B/Soul", "Jazz"],
+    "year": 1980,
+    "key": { "tonic": "F", "mode": "minor" },
+    "bpm": 96,
+    "timeSignature": [4, 4],
+    "sections": [
+      {
+        "name": "Chorus",
+        "bars": [
+          ["Dbmaj7"],
+          ["C7"],
+          ["Fm7"],
+          ["Ebm7", "Ab7"],
+          ["Dbmaj7"],
+          ["C7"],
+          ["Fm7"],
+          ["Ebm7", "Ab7"]
+        ]
+      }
+    ],
+    "form": [
+      { "section": "Chorus", "start": null, "chordTimes": null },
+      { "section": "Chorus", "start": null, "chordTimes": null }
+    ],
+    "youtube": { "id": null, "offset": 0 },
+    "verified": false,
+    "hooks": []
+  },
+  {
+    "id": "isnt-she-lovely",
+    "title": "Isn't She Lovely",
+    "artist": "Stevie Wonder",
+    "genres": ["R&B/Soul"],
+    "year": 1976,
+    "key": { "tonic": "C#", "mode": "minor" },
+    "bpm": 119,
+    "timeSignature": [4, 4],
+    "sections": [
+      {
+        "name": "Verse",
+        "bars": [
+          ["C#m7"],
+          ["F#7"],
+          ["B"],
+          ["G#7"],
+          ["C#m7"],
+          ["F#7"],
+          ["B"],
+          ["G#7"]
+        ]
+      },
+      {
+        "name": "Chorus",
+        "bars": [
+          ["C#m7"],
+          ["F#7"],
+          ["B"],
+          ["G#7"]
+        ]
+      }
+    ],
+    "form": [
+      { "section": "Verse", "start": null, "chordTimes": null },
+      { "section": "Chorus", "start": null, "chordTimes": null },
+      { "section": "Verse", "start": null, "chordTimes": null },
+      { "section": "Chorus", "start": null, "chordTimes": null }
+    ],
+    "youtube": { "id": null, "offset": 0 },
+    "verified": false,
+    "hooks": []
+  },
+  {
+    "id": "aint-no-sunshine",
+    "title": "Ain't No Sunshine",
+    "artist": "Bill Withers",
+    "genres": ["R&B/Soul"],
+    "year": 1971,
+    "key": { "tonic": "A", "mode": "minor" },
+    "bpm": 78,
+    "timeSignature": [4, 4],
+    "sections": [
+      {
+        "name": "Verse",
+        "bars": [
+          ["Am7"],
+          ["Em7", "G"],
+          ["Am7"],
+          ["Em7", "G"],
+          ["Am7"],
+          ["Em7", "G"],
+          ["Em7"],
+          ["Dm7"],
+          ["Am7"],
+          ["Am7"]
+        ]
+      }
+    ],
+    "form": [
+      { "section": "Verse", "start": null, "chordTimes": null },
+      { "section": "Verse", "start": null, "chordTimes": null },
+      { "section": "Verse", "start": null, "chordTimes": null }
+    ],
+    "youtube": { "id": null, "offset": 0 },
+    "verified": false,
+    "hooks": []
+  },
+  {
+    "id": "lean-on-me",
+    "title": "Lean on Me",
+    "artist": "Bill Withers",
+    "genres": ["R&B/Soul"],
+    "year": 1972,
+    "key": { "tonic": "C", "mode": "major" },
+    "bpm": 76,
+    "timeSignature": [4, 4],
+    "sections": [
+      {
+        "name": "Verse",
+        "bars": [
+          ["C"],
+          ["C", "F"],
+          ["C"],
+          ["Em", "G"],
+          ["C"],
+          ["C", "F"],
+          ["C"],
+          ["G", "C"]
+        ]
+      }
+    ],
+    "form": [
+      { "section": "Verse", "start": null, "chordTimes": null },
+      { "section": "Verse", "start": null, "chordTimes": null },
+      { "section": "Verse", "start": null, "chordTimes": null }
+    ],
+    "youtube": { "id": null, "offset": 0 },
+    "verified": false,
+    "hooks": []
+  },
+  {
+    "id": "killing-me-softly",
+    "title": "Killing Me Softly",
+    "artist": "Fugees",
+    "genres": ["R&B/Soul"],
+    "year": 1996,
+    "key": { "tonic": "E", "mode": "minor" },
+    "bpm": 92,
+    "timeSignature": [4, 4],
+    "sections": [
+      {
+        "name": "Chorus",
+        "bars": [
+          ["Em7"],
+          ["Am7"],
+          ["D"],
+          ["G"],
+          ["C"],
+          ["Am7"],
+          ["B7"],
+          ["B7"]
+        ]
+      }
+    ],
+    "form": [
+      { "section": "Chorus", "start": null, "chordTimes": null },
+      { "section": "Chorus", "start": null, "chordTimes": null }
+    ],
+    "youtube": { "id": null, "offset": 0 },
+    "verified": false,
+    "hooks": []
+  },
+  {
+    "id": "georgia-on-my-mind",
+    "title": "Georgia on My Mind",
+    "artist": "Ray Charles",
+    "genres": ["R&B/Soul", "Jazz"],
+    "year": 1960,
+    "key": { "tonic": "F", "mode": "major" },
+    "bpm": 60,
+    "timeSignature": [4, 4],
+    "sections": [
+      {
+        "name": "A",
+        "bars": [
+          ["Fmaj7"],
+          ["A7"],
+          ["Dm7"],
+          ["G7"],
+          ["Gm7"],
+          ["C7"],
+          ["F", "D7"],
+          ["Gm7", "C7"]
+        ]
+      }
+    ],
+    "form": [
+      { "section": "A", "start": null, "chordTimes": null },
+      { "section": "A", "start": null, "chordTimes": null }
+    ],
+    "youtube": { "id": null, "offset": 0 },
+    "verified": false,
+    "hooks": []
+  }
+]
