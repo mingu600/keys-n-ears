@@ -1,10 +1,10 @@
 import { buildPool, matches, revealVoicing, FAMILIES } from '../theory/chords.js';
-import { record, pickNext, slowest, PENALTY_MS } from '../core/scheduler.js';
+import { record, pickNext, weakest, scoreFromTime, withHint, SKIP_SCORE, TARGETS } from '../core/scheduler.js';
 import { createInput } from '../core/midi.js';
 import { createKeyboard } from '../ui/keyboard.js';
 import * as synth from '../core/fallback-synth.js';
 
-const STORE_KEY = 'chord-drill:v1';
+const STORE_KEY = 'chord-drill:v2';
 const ADVANCE_DELAY_MS = 350;
 
 const $ = (id) => document.getElementById(id);
@@ -46,7 +46,12 @@ function rebuildPool() {
 }
 
 function nextChord() {
-  state.current = pickNext(state.pool, state.stats, state.current);
+  state.current = pickNext(state.pool, state.stats, state.current, {
+    keyOf: (c) => 'chord:' + c.id,
+    // Avoid back-to-back chords with the same root and quality (e.g. C then C/E),
+    // so a still-held previous chord can't count as the answer.
+    tooSimilar: (a, b) => !!b && a.root === b.root && a.quality === b.quality,
+  });
   state.shownAt = performance.now();
   state.usedHint = false;
   state.solved = false;
@@ -62,14 +67,15 @@ function check() {
   if (state.solved || !state.current) return;
   if (!matches(state.current, state.held, { lenient: state.settings.lenient })) return;
   const ms = performance.now() - state.shownAt;
-  finish(state.usedHint ? PENALTY_MS : ms, state.usedHint ? 'Got it (hint used)' : `${(ms / 1000).toFixed(2)}s`);
+  const score = scoreFromTime(ms, TARGETS.chord);
+  finish(state.usedHint ? withHint(score) : score, ms, state.usedHint ? 'Got it (hint used)' : `${(ms / 1000).toFixed(2)}s`);
 }
 
-function finish(recordedMs, message) {
+function finish(score, rawMs, message) {
   state.solved = true;
-  state.stats = record(state.stats, state.current.id, recordedMs);
+  state.stats = record(state.stats, 'chord:' + state.current.id, score, rawMs);
   state.session.count++;
-  state.session.totalMs += recordedMs;
+  state.session.totalMs += rawMs;
   save();
   $('chord').className = 'chord correct';
   $('feedback').textContent = message;
@@ -85,7 +91,7 @@ function hint() {
 
 function skip() {
   if (state.solved) return;
-  finish(PENALTY_MS, `Skipped: ${state.current.tones.map((t) => t.name).join(' ')}`);
+  finish(SKIP_SCORE, performance.now() - state.shownAt, `Skipped: ${state.current.tones.map((t) => t.name).join(' ')}`);
 }
 
 // ---------- rendering ----------
@@ -100,9 +106,10 @@ function renderStats() {
   $('session').textContent = count ? `${count} chords · avg ${(totalMs / count / 1000).toFixed(2)}s` : 'No chords yet';
   const list = $('slowest');
   list.innerHTML = '';
-  for (const s of slowest(state.stats, 5)) {
+  for (const s of weakest(state.stats, { prefix: 'chord:', count: 5 })) {
     const li = document.createElement('li');
-    li.innerHTML = `<span>${s.id}</span><span>${(s.ema / 1000).toFixed(1)}s</span>`;
+    const last = s.lastMs === undefined ? '—' : `${(s.lastMs / 1000).toFixed(1)}s`;
+    li.innerHTML = `<span>${s.key.slice('chord:'.length)}</span><span>${last}</span>`;
     list.appendChild(li);
   }
   if (!list.children.length) list.innerHTML = '<li class="muted">Play a few chords first</li>';
