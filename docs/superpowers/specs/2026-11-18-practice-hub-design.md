@@ -2,7 +2,7 @@
 
 Date: 2026-11-18
 Status: reviewed, awaiting user approval
-Code: `/home/mingukim/Documents/chord-drill/` (the existing Chord Drill prototype grows into this app)
+Code: this repository (the Chord Drill prototype grows into this app)
 
 ## 1. Intent
 
