@@ -53,6 +53,22 @@ export function releaseHeld(held, source) {
   return released;
 }
 
+// Pure: inputs to listen to. A saved id that is not connected falls back to all inputs.
+export function pickInputs(all, savedId) {
+  const pick = all.filter((i) => i.id === savedId);
+  return savedId === 'all' || !pick.length ? all : pick;
+}
+
+// Pure-ish duck-typed check: only text-entry targets swallow note keys.
+const TEXT_INPUT_TYPES = new Set(['text', 'search', 'number', 'password', 'email', 'url', 'tel', '']);
+export function isTextEntryTarget(t) {
+  if (!t || typeof t.tagName !== 'string') return false;
+  const tag = t.tagName.toUpperCase();
+  if (tag === 'TEXTAREA') return true;
+  if (tag === 'INPUT') return TEXT_INPUT_TYPES.has(String(t.type ?? '').toLowerCase());
+  return Boolean(t.isContentEditable);
+}
+
 export function createMidi({ onStatus }) {
   const held = new Map(); // note -> source
   const listeners = { change: new Set(), note: new Set(), pedal: new Set(), devices: new Set() };
@@ -96,8 +112,7 @@ export function createMidi({ onStatus }) {
   };
 
   // --- Computer keyboard ---
-  const isFormTarget = (t) =>
-    t instanceof HTMLInputElement || t instanceof HTMLSelectElement || t instanceof HTMLTextAreaElement;
+  const isFormTarget = isTextEntryTarget;
   window.addEventListener('keydown', (e) => {
     if (e.repeat || e.metaKey || e.ctrlKey || e.altKey) return;
     if (isFormTarget(e.target)) return;
@@ -137,7 +152,7 @@ export function createMidi({ onStatus }) {
   const selectedInputs = () => {
     if (!access) return [];
     const all = connectedPorts(access.inputs);
-    return saved.input === 'all' ? all : all.filter((i) => i.id === saved.input);
+    return pickInputs(all, saved.input);
   };
 
   const bind = (statusOnDisconnect) => {
@@ -146,7 +161,7 @@ export function createMidi({ onStatus }) {
     for (const input of access.inputs.values()) {
       input.onmidimessage = active.includes(input) ? (msg) => handleMidi(msg.data) : null;
     }
-    if (statusOnDisconnect) onStatus({ ok: false, text: 'MIDI device disconnected.' });
+    if (statusOnDisconnect && !active.length) onStatus({ ok: false, text: 'MIDI device disconnected.' });
     else {
       onStatus(
         active.length
@@ -184,8 +199,8 @@ export function createMidi({ onStatus }) {
         access = a;
         access.onstatechange = (e) => {
           const port = e && e.port;
-          const gone = port && port.type === 'input' && port.state === 'disconnected';
-          if (gone) forceRelease('midi');
+          const gone = port && port.state === 'disconnected';
+          if (gone && port.type === 'input') forceRelease('midi');
           bind(Boolean(gone));
           emit('devices', { inputs: inputs(), outputs: outputs() });
         };

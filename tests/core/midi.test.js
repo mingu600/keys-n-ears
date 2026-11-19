@@ -34,3 +34,21 @@ test('connectedPorts keeps only connected ports', () => {
   assert.deepEqual(connectedPorts(m).map((p) => p.id), ['a']);
   assert.deepEqual(connectedPorts(null), []);
 });
+
+import { pickInputs, isTextEntryTarget } from '../../src/core/midi.js';
+test('pickInputs falls back to all when the saved id is not connected', () => {
+  const all = [{ id: 'a' }, { id: 'b' }];
+  assert.deepEqual(pickInputs(all, 'all'), all);
+  assert.deepEqual(pickInputs(all, 'b'), [{ id: 'b' }]);
+  assert.deepEqual(pickInputs(all, 'gone'), all);
+  assert.deepEqual(pickInputs([], 'gone'), []);
+});
+test('isTextEntryTarget: only text-entry controls block note keys', () => {
+  assert.equal(isTextEntryTarget({ tagName: 'INPUT', type: 'text' }), true);
+  assert.equal(isTextEntryTarget({ tagName: 'INPUT', type: 'password' }), true);
+  assert.equal(isTextEntryTarget({ tagName: 'TEXTAREA' }), true);
+  assert.equal(isTextEntryTarget({ tagName: 'DIV', isContentEditable: true }), true);
+  assert.equal(isTextEntryTarget({ tagName: 'INPUT', type: 'checkbox' }), false);
+  assert.equal(isTextEntryTarget({ tagName: 'SELECT' }), false);
+  assert.equal(isTextEntryTarget(null), false);
+});

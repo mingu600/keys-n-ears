@@ -1,5 +1,6 @@
 import { buildPool, matches, revealVoicing, FAMILIES } from '../theory/chords.js';
 import { record, pickNext, weakest, scoreFromTime, withHint, SKIP_SCORE, TARGETS } from '../core/scheduler.js';
+import { isTextEntryTarget } from '../core/midi.js';
 import { createKeyboard } from '../ui/keyboard.js';
 import { filterByGenre } from '../library/library.js';
 import { updateSongStatus } from '../core/practice-log.js';
@@ -233,6 +234,7 @@ export function mount(el, params, ctx) {
         input.checked ? fams.add(key) : fams.delete(key);
         state.settings.families = [...fams];
         if (fams.size === 0) input.checked = true; // keep at least one family on
+        input.blur();
         applySettings();
       });
       box.appendChild(wrap);
@@ -246,6 +248,7 @@ export function mount(el, params, ctx) {
       sel.addEventListener('change', () => {
         state.settings[key] = sel.value;
         if (key === 'mode') state.lead = null;
+        sel.blur();
         applySettings();
       });
     }
@@ -256,6 +259,7 @@ export function mount(el, params, ctx) {
     el.checked = state.settings[key];
     el.addEventListener('change', () => {
       state.settings[key] = el.checked;
+      el.blur();
       applySettings();
     });
   }
@@ -287,7 +291,7 @@ export function mount(el, params, ctx) {
   });
   const onKeydown = (e) => {
     const t = e.target;
-    if (t instanceof HTMLInputElement || t instanceof HTMLSelectElement || t instanceof HTMLTextAreaElement) return;
+    if (isTextEntryTarget(t)) return;
     if (e.key === ' ') {
       e.preventDefault();
       hint();

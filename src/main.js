@@ -75,9 +75,10 @@ function refreshDevices() {
   fillSelect($('output-select'), [['', 'Prompts: Browser'], ...outs.map((o) => [o.id, `Prompts: ${o.name}`])], cur ?? '');
 }
 
-$('input-select').addEventListener('change', (e) => midi.selectInput(e.target.value));
+$('input-select').addEventListener('change', (e) => { midi.selectInput(e.target.value); e.target.blur(); });
 $('output-select').addEventListener('change', (e) => {
   const id = e.target.value;
+  e.target.blur();
   if (id) { midi.selectOutput(id); sound.setOutput('piano'); }
   else { midi.selectOutput(null); sound.setOutput('browser'); }
 });
@@ -93,6 +94,7 @@ function renderGenres() {
     input.type = 'checkbox';
     input.checked = settings.genres.includes(g);
     input.addEventListener('change', () => {
+      input.blur();
       const set = new Set(settings.genres);
       input.checked ? set.add(g) : set.delete(g);
       settings.genres = GENRES.filter((x) => set.has(x));
