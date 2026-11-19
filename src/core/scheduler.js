@@ -1,6 +1,6 @@
 // Picks the next chord, favouring chords you are slow on or haven't seen.
 // Stats are a plain object: { [chordId]: { n, ema } } where ema is a moving
-// average of response time in ms. Pure functions; tested in tests/scheduler.test.js.
+// average of response time in ms. Pure functions; tested in tests/core/scheduler.test.js.
 
 export const PENALTY_MS = 10000; // recorded time for skips and reveals
 const EMA_ALPHA = 0.35;

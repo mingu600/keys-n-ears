@@ -1,8 +1,8 @@
-import { buildPool, matches, revealVoicing, FAMILIES } from './chords.js';
-import { record, pickNext, slowest, PENALTY_MS } from './scheduler.js';
-import { createInput } from './input.js';
-import { createKeyboard } from './keyboard.js';
-import * as synth from './synth.js';
+import { buildPool, matches, revealVoicing, FAMILIES } from '../theory/chords.js';
+import { record, pickNext, slowest, PENALTY_MS } from '../core/scheduler.js';
+import { createInput } from '../core/midi.js';
+import { createKeyboard } from '../ui/keyboard.js';
+import * as synth from '../core/fallback-synth.js';
 
 const STORE_KEY = 'chord-drill:v1';
 const ADVANCE_DELAY_MS = 350;
