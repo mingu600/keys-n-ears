@@ -5,27 +5,33 @@
     "artist": "Nobuo Uematsu (Final Fantasy X)",
     "genres": ["Game"],
     "year": 2001,
-    "key": { "tonic": "A", "mode": "minor" },
-    "bpm": 72,
+    "key": { "tonic": "E", "mode": "minor" },
+    "bpm": 90,
     "timeSignature": [4, 4],
     "sections": [
       {
-        "name": "Theme",
+        "name": "Intro",
         "bars": [
-          ["Am"],
-          ["F"],
-          ["G"],
+          ["Em"],
+          ["D"],
           ["C"],
-          ["Am"],
-          ["F"],
-          ["E"],
-          ["E"]
+          ["D"]
+        ]
+      },
+      {
+        "name": "Verse",
+        "bars": [
+          ["Em"],
+          ["Cmaj7"],
+          ["D7"],
+          ["G"]
         ]
       }
     ],
     "form": [
-      { "section": "Theme", "start": null, "chordTimes": null },
-      { "section": "Theme", "start": null, "chordTimes": null }
+      { "section": "Intro", "start": null, "chordTimes": null },
+      { "section": "Verse", "start": null, "chordTimes": null },
+      { "section": "Verse", "start": null, "chordTimes": null }
     ],
     "youtube": { "id": null, "offset": 0 },
     "verified": false,
@@ -44,14 +50,12 @@
       {
         "name": "Theme",
         "bars": [
-          ["D"],
-          ["A/C#"],
-          ["Bm"],
-          ["F#m/A"],
-          ["G"],
-          ["D/F#"],
-          ["Em"],
-          ["A"]
+          ["Dadd9"],
+          ["Am"],
+          ["Dadd9"],
+          ["Am"],
+          ["Bb"],
+          ["Gm"]
         ]
       }
     ],
@@ -74,22 +78,14 @@
     "timeSignature": [4, 4],
     "sections": [
       {
-        "name": "Theme",
+        "name": "Tonic only (unconfirmed)",
         "bars": [
-          ["F"],
-          ["G"],
-          ["Em"],
-          ["Am"],
-          ["F"],
-          ["G"],
-          ["C"],
           ["C"]
         ]
       }
     ],
     "form": [
-      { "section": "Theme", "start": null, "chordTimes": null },
-      { "section": "Theme", "start": null, "chordTimes": null }
+      { "section": "Tonic only (unconfirmed)", "start": null, "chordTimes": null }
     ],
     "youtube": { "id": null, "offset": 0 },
     "verified": false,
@@ -132,7 +128,7 @@
     "genres": ["Game"],
     "year": 1998,
     "key": { "tonic": "D", "mode": "minor" },
-    "bpm": 160,
+    "bpm": 200,
     "timeSignature": [3, 4],
     "sections": [
       {
@@ -140,12 +136,8 @@
         "bars": [
           ["Dm"],
           ["Dm"],
-          ["C"],
-          ["C"],
-          ["Dm"],
-          ["Dm"],
-          ["C"],
-          ["Dm"]
+          ["Em"],
+          ["F"]
         ]
       }
     ],
@@ -163,25 +155,30 @@
     "artist": "Yasunori Mitsuda (Chrono Trigger)",
     "genres": ["Game"],
     "year": 1995,
-    "key": { "tonic": "A", "mode": "minor" },
-    "bpm": 100,
+    "key": { "tonic": "F#", "mode": "minor" },
+    "bpm": 112,
     "timeSignature": [4, 4],
     "sections": [
       {
+        "name": "Intro",
+        "bars": [
+          ["Dmaj7"],
+          ["F#m11"],
+          ["C#m/E"]
+        ]
+      },
+      {
         "name": "Theme",
         "bars": [
-          ["Am"],
-          ["G"],
-          ["F"],
-          ["E"],
-          ["Am"],
-          ["G"],
-          ["F"],
-          ["E"]
+          ["Dmaj7"],
+          ["C#m7"],
+          ["C#m9"],
+          ["C#m7"]
         ]
       }
     ],
     "form": [
+      { "section": "Intro", "start": null, "chordTimes": null },
       { "section": "Theme", "start": null, "chordTimes": null },
       { "section": "Theme", "start": null, "chordTimes": null }
     ],
@@ -195,21 +192,17 @@
     "artist": "Jonathan Coulton (Portal)",
     "genres": ["Game"],
     "year": 2007,
-    "key": { "tonic": "G", "mode": "major" },
+    "key": { "tonic": "D", "mode": "major" },
     "bpm": 120,
     "timeSignature": [4, 4],
     "sections": [
       {
         "name": "Verse",
         "bars": [
-          ["G"],
+          ["D/A"],
           ["Bm"],
-          ["Em"],
-          ["C"],
-          ["G"],
-          ["Bm"],
-          ["Em"],
-          ["C"]
+          ["D/A"],
+          ["Bm"]
         ]
       }
     ],

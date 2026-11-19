@@ -26,11 +26,11 @@
         "name": "Chorus",
         "bars": [
           ["A"],
-          ["E/G#"],
+          ["E"],
           ["F#m"],
           ["D"],
           ["A"],
-          ["E/G#"],
+          ["E"],
           ["F#m"],
           ["D"]
         ]
@@ -72,7 +72,7 @@
         ]
       },
       {
-        "name": "Pre-Chorus",
+        "name": "Chorus",
         "bars": [
           ["Fm"],
           ["Db"],
@@ -87,9 +87,9 @@
     ],
     "form": [
       { "section": "Verse", "start": null, "chordTimes": null },
-      { "section": "Pre-Chorus", "start": null, "chordTimes": null },
+      { "section": "Chorus", "start": null, "chordTimes": null },
       { "section": "Verse", "start": null, "chordTimes": null },
-      { "section": "Pre-Chorus", "start": null, "chordTimes": null }
+      { "section": "Chorus", "start": null, "chordTimes": null }
     ],
     "youtube": { "id": null, "offset": 0 },
     "verified": false,
@@ -169,13 +169,13 @@
       {
         "name": "Chorus",
         "bars": [
+          ["Bbm"],
           ["Ab"],
-          ["Fm"],
-          ["Db"],
           ["Eb"],
+          ["Eb"],
+          ["Bbm"],
           ["Ab"],
-          ["Fm"],
-          ["Db"],
+          ["Eb"],
           ["Eb"]
         ]
       }
@@ -274,12 +274,23 @@
           ["Db"],
           ["Db"]
         ]
+      },
+      {
+        "name": "Bridge",
+        "bars": [
+          ["Bbm"],
+          ["Ab"],
+          ["Db"],
+          ["Gb"]
+        ]
       }
     ],
     "form": [
       { "section": "Verse", "start": null, "chordTimes": null },
       { "section": "Chorus", "start": null, "chordTimes": null },
       { "section": "Verse", "start": null, "chordTimes": null },
+      { "section": "Chorus", "start": null, "chordTimes": null },
+      { "section": "Bridge", "start": null, "chordTimes": null },
       { "section": "Chorus", "start": null, "chordTimes": null }
     ],
     "youtube": { "id": null, "offset": 0 },

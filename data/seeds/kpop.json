@@ -6,26 +6,26 @@
     "genres": ["K-pop"],
     "year": 2017,
     "key": { "tonic": "Eb", "mode": "major" },
-    "bpm": 107,
+    "bpm": 108,
     "timeSignature": [4, 4],
     "sections": [
       {
-        "name": "Chorus",
+        "name": "Verse",
         "bars": [
-          ["Abmaj7"],
-          ["Bb"],
-          ["Gm7"],
-          ["Cm7"],
-          ["Abmaj7"],
-          ["Bb"],
-          ["Gm7"],
-          ["Cm7"]
+          ["Eb"],
+          ["Gm"],
+          ["Cm"],
+          ["Ab"],
+          ["Eb"],
+          ["Gm"],
+          ["Cm"],
+          ["Ab"]
         ]
       }
     ],
     "form": [
-      { "section": "Chorus", "start": null, "chordTimes": null },
-      { "section": "Chorus", "start": null, "chordTimes": null }
+      { "section": "Verse", "start": null, "chordTimes": null },
+      { "section": "Verse", "start": null, "chordTimes": null }
     ],
     "youtube": { "id": null, "offset": 0 },
     "verified": false,
@@ -44,20 +44,27 @@
       {
         "name": "Chorus",
         "bars": [
-          ["E"],
-          ["G#m7"],
-          ["C#m7"],
-          ["F#m7", "B"],
-          ["E"],
-          ["G#m7"],
-          ["C#m7"],
-          ["F#m7", "B"]
+          ["C#m"],
+          ["F#m7"],
+          ["B7sus4"],
+          ["E"]
         ]
+      },
+      {
+        "name": "Outro",
+        "bars": [
+          ["D#m"],
+          ["G#m7"],
+          ["C#7sus4"],
+          ["F#"]
+        ],
+        "key": { "tonic": "F#", "mode": "major" }
       }
     ],
     "form": [
       { "section": "Chorus", "start": null, "chordTimes": null },
-      { "section": "Chorus", "start": null, "chordTimes": null }
+      { "section": "Chorus", "start": null, "chordTimes": null },
+      { "section": "Outro", "start": null, "chordTimes": null }
     ],
     "youtube": { "id": null, "offset": 0 },
     "verified": false,
@@ -69,27 +76,23 @@
     "artist": "IU",
     "genres": ["K-pop"],
     "year": 2017,
-    "key": { "tonic": "G", "mode": "major" },
-    "bpm": 72,
+    "key": { "tonic": "Ab", "mode": "major" },
+    "bpm": 80,
     "timeSignature": [4, 4],
     "sections": [
       {
-        "name": "Chorus",
+        "name": "Verse",
         "bars": [
-          ["Cmaj7"],
-          ["D"],
-          ["Bm7"],
-          ["Em7"],
-          ["Cmaj7"],
-          ["D"],
-          ["G"],
-          ["G"]
+          ["Ab", "Bb"],
+          ["Gm", "Cm"],
+          ["Ab", "Bb"],
+          ["Gm", "Cm"]
         ]
       }
     ],
     "form": [
-      { "section": "Chorus", "start": null, "chordTimes": null },
-      { "section": "Chorus", "start": null, "chordTimes": null }
+      { "section": "Verse", "start": null, "chordTimes": null },
+      { "section": "Verse", "start": null, "chordTimes": null }
     ],
     "youtube": { "id": null, "offset": 0 },
     "verified": false,
@@ -101,21 +104,17 @@
     "artist": "iKON",
     "genres": ["K-pop"],
     "year": 2018,
-    "key": { "tonic": "C", "mode": "major" },
-    "bpm": 98,
+    "key": { "tonic": "E", "mode": "minor" },
+    "bpm": 118,
     "timeSignature": [4, 4],
     "sections": [
       {
         "name": "Chorus",
         "bars": [
-          ["F"],
-          ["G"],
-          ["Em"],
-          ["Am"],
-          ["F"],
-          ["G"],
-          ["C"],
-          ["C"]
+          ["Cmaj7"],
+          ["D"],
+          ["Bm7"],
+          ["Em7"]
         ]
       }
     ],
@@ -142,12 +141,8 @@
         "bars": [
           ["Dmaj7"],
           ["C#m7"],
-          ["Bm7"],
-          ["C#m7"],
-          ["Dmaj7"],
-          ["C#m7"],
-          ["Bm7"],
-          ["C#m7"]
+          ["F#m7"],
+          ["Bm7", "E7"]
         ]
       }
     ],
@@ -165,27 +160,23 @@
     "artist": "NewJeans",
     "genres": ["K-pop"],
     "year": 2022,
-    "key": { "tonic": "E", "mode": "major" },
+    "key": { "tonic": "E", "mode": "minor" },
     "bpm": 100,
     "timeSignature": [4, 4],
     "sections": [
       {
-        "name": "Chorus",
+        "name": "Verse",
         "bars": [
-          ["Amaj7"],
-          ["B"],
-          ["G#m7"],
-          ["C#m7"],
-          ["Amaj7"],
-          ["B"],
-          ["G#m7"],
-          ["C#m7"]
+          ["Am9"],
+          ["Bm7"],
+          ["Em7"],
+          ["Em7"]
         ]
       }
     ],
     "form": [
-      { "section": "Chorus", "start": null, "chordTimes": null },
-      { "section": "Chorus", "start": null, "chordTimes": null }
+      { "section": "Verse", "start": null, "chordTimes": null },
+      { "section": "Verse", "start": null, "chordTimes": null }
     ],
     "youtube": { "id": null, "offset": 0 },
     "verified": false,
@@ -197,26 +188,33 @@
     "artist": "IVE",
     "genres": ["K-pop"],
     "year": 2021,
-    "key": { "tonic": "A", "mode": "minor" },
+    "key": { "tonic": "E", "mode": "major" },
     "bpm": 120,
     "timeSignature": [4, 4],
     "sections": [
       {
+        "name": "Verse",
+        "bars": [
+          ["E"],
+          ["C"],
+          ["B"],
+          ["B"]
+        ]
+      },
+      {
         "name": "Chorus",
         "bars": [
-          ["F"],
-          ["G"],
-          ["Em"],
-          ["Am"],
-          ["F"],
-          ["G"],
-          ["Em"],
-          ["Am"]
+          ["E"],
+          ["C"],
+          ["A"],
+          ["A"]
         ]
       }
     ],
     "form": [
+      { "section": "Verse", "start": null, "chordTimes": null },
       { "section": "Chorus", "start": null, "chordTimes": null },
+      { "section": "Verse", "start": null, "chordTimes": null },
       { "section": "Chorus", "start": null, "chordTimes": null }
     ],
     "youtube": { "id": null, "offset": 0 },

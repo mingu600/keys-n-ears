@@ -5,27 +5,19 @@
     "artist": "LiSA",
     "genres": ["J-pop/Anime"],
     "year": 2019,
-    "key": { "tonic": "Eb", "mode": "minor" },
+    "key": { "tonic": "E", "mode": "minor" },
     "bpm": 135,
     "timeSignature": [4, 4],
     "sections": [
       {
-        "name": "Chorus",
+        "name": "Tonic only (unconfirmed)",
         "bars": [
-          ["Cb"],
-          ["Db"],
-          ["Bbm"],
-          ["Ebm"],
-          ["Cb"],
-          ["Db"],
-          ["Bbm"],
-          ["Ebm"]
+          ["Em"]
         ]
       }
     ],
     "form": [
-      { "section": "Chorus", "start": null, "chordTimes": null },
-      { "section": "Chorus", "start": null, "chordTimes": null }
+      { "section": "Tonic only (unconfirmed)", "start": null, "chordTimes": null }
     ],
     "youtube": { "id": null, "offset": 0 },
     "verified": false,
@@ -37,25 +29,31 @@
     "artist": "TK from Ling tosite sigure",
     "genres": ["J-pop/Anime", "Rock"],
     "year": 2014,
-    "key": { "tonic": "B", "mode": "minor" },
+    "key": { "tonic": "G", "mode": "minor" },
     "bpm": 135,
     "timeSignature": [4, 4],
     "sections": [
       {
+        "name": "Intro",
+        "bars": [
+          ["Eb"],
+          ["Gm7"],
+          ["F"],
+          ["Gm7"]
+        ]
+      },
+      {
         "name": "Chorus",
         "bars": [
-          ["G"],
-          ["A"],
-          ["F#m"],
-          ["Bm"],
-          ["G"],
-          ["A"],
-          ["F#m"],
-          ["Bm"]
+          ["Eb"],
+          ["F"],
+          ["Gm7"],
+          ["Dm7"]
         ]
       }
     ],
     "form": [
+      { "section": "Intro", "start": null, "chordTimes": null },
       { "section": "Chorus", "start": null, "chordTimes": null },
       { "section": "Chorus", "start": null, "chordTimes": null }
     ],
@@ -69,25 +67,41 @@
     "artist": "Kenshi Yonezu",
     "genres": ["J-pop/Anime"],
     "year": 2018,
-    "key": { "tonic": "Bb", "mode": "major" },
+    "key": { "tonic": "B", "mode": "major" },
     "bpm": 87,
     "timeSignature": [4, 4],
     "sections": [
       {
+        "name": "Verse",
+        "bars": [
+          ["G#m"],
+          ["F#"],
+          ["E"],
+          ["B"]
+        ]
+      },
+      {
+        "name": "Pre-Chorus",
+        "bars": [
+          ["C#m"],
+          ["G#m"],
+          ["F#"],
+          ["B"]
+        ]
+      },
+      {
         "name": "Chorus",
         "bars": [
-          ["Eb"],
-          ["F"],
-          ["Dm"],
-          ["Gm"],
-          ["Eb"],
-          ["F"],
-          ["Bb"],
-          ["Bb"]
+          ["E"],
+          ["B"],
+          ["F#"],
+          ["G#m"]
         ]
       }
     ],
     "form": [
+      { "section": "Verse", "start": null, "chordTimes": null },
+      { "section": "Pre-Chorus", "start": null, "chordTimes": null },
       { "section": "Chorus", "start": null, "chordTimes": null },
       { "section": "Chorus", "start": null, "chordTimes": null }
     ],
@@ -101,7 +115,7 @@
     "artist": "YOASOBI",
     "genres": ["J-pop/Anime"],
     "year": 2019,
-    "key": { "tonic": "Eb", "mode": "major" },
+    "key": { "tonic": "C", "mode": "minor" },
     "bpm": 130,
     "timeSignature": [4, 4],
     "sections": [
@@ -111,11 +125,7 @@
           ["Abmaj7"],
           ["Bb7"],
           ["Gm7"],
-          ["Cm7"],
-          ["Abmaj7"],
-          ["Bb7"],
-          ["Gm7"],
-          ["Cm7"]
+          ["Cm"]
         ]
       }
     ],
@@ -133,27 +143,23 @@
     "artist": "RADWIMPS",
     "genres": ["J-pop/Anime", "Rock"],
     "year": 2016,
-    "key": { "tonic": "D", "mode": "major" },
-    "bpm": 150,
+    "key": { "tonic": "B", "mode": "major" },
+    "bpm": 62,
     "timeSignature": [4, 4],
     "sections": [
       {
-        "name": "Chorus",
+        "name": "Intro",
         "bars": [
-          ["G"],
-          ["A"],
-          ["F#m"],
-          ["Bm"],
-          ["G"],
-          ["A"],
-          ["D"],
-          ["D"]
+          ["B/D#"],
+          ["E"],
+          ["F#"],
+          ["G#m", "F#"]
         ]
       }
     ],
     "form": [
-      { "section": "Chorus", "start": null, "chordTimes": null },
-      { "section": "Chorus", "start": null, "chordTimes": null }
+      { "section": "Intro", "start": null, "chordTimes": null },
+      { "section": "Intro", "start": null, "chordTimes": null }
     ],
     "youtube": { "id": null, "offset": 0 },
     "verified": false,
@@ -170,20 +176,26 @@
     "timeSignature": [4, 4],
     "sections": [
       {
+        "name": "Intro",
+        "bars": [
+          ["Cm"],
+          ["Fm/Ab"],
+          ["Bb"],
+          ["Eb"]
+        ]
+      },
+      {
         "name": "Chorus",
         "bars": [
           ["Cm"],
           ["Fm"],
           ["Bb"],
-          ["Eb"],
-          ["Ab"],
-          ["Fm"],
-          ["G"],
-          ["Cm"]
+          ["Eb"]
         ]
       }
     ],
     "form": [
+      { "section": "Intro", "start": null, "chordTimes": null },
       { "section": "Chorus", "start": null, "chordTimes": null },
       { "section": "Chorus", "start": null, "chordTimes": null }
     ],
@@ -198,26 +210,22 @@
     "genres": ["J-pop/Anime", "Rock"],
     "year": 2014,
     "key": { "tonic": "D", "mode": "major" },
-    "bpm": 190,
+    "bpm": 183,
     "timeSignature": [4, 4],
     "sections": [
       {
-        "name": "Chorus",
+        "name": "Verse",
         "bars": [
+          ["D/F#"],
           ["G"],
           ["A"],
-          ["Bm"],
-          ["D"],
-          ["G"],
-          ["A"],
-          ["D"],
-          ["D"]
+          ["Bm7"]
         ]
       }
     ],
     "form": [
-      { "section": "Chorus", "start": null, "chordTimes": null },
-      { "section": "Chorus", "start": null, "chordTimes": null }
+      { "section": "Verse", "start": null, "chordTimes": null },
+      { "section": "Verse", "start": null, "chordTimes": null }
     ],
     "youtube": { "id": null, "offset": 0 },
     "verified": false,

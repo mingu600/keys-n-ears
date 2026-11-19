@@ -282,21 +282,33 @@
     "timeSignature": [4, 4],
     "sections": [
       {
+        "name": "Verse",
+        "bars": [
+          ["B"],
+          ["D#m7"],
+          ["G#m7"],
+          ["B/F#", "G#m/D#"]
+        ],
+        "key": { "tonic": "B", "mode": "major" }
+      },
+      {
         "name": "Chorus",
         "bars": [
           ["F#m"],
-          ["D"],
+          ["Dsus2"],
           ["A"],
           ["E"],
           ["F#m"],
-          ["D"],
+          ["Dsus2"],
           ["A"],
           ["E"]
         ]
       }
     ],
     "form": [
+      { "section": "Verse", "start": null, "chordTimes": null },
       { "section": "Chorus", "start": null, "chordTimes": null },
+      { "section": "Verse", "start": null, "chordTimes": null },
       { "section": "Chorus", "start": null, "chordTimes": null }
     ],
     "youtube": { "id": null, "offset": 0 },
