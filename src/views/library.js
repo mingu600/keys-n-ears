@@ -1,7 +1,7 @@
 import { filterByGenre, parsePack, parseImport, withoutToken, keepToken } from '../library/library.js';
 import { syncPacks } from '../core/github-sync.js';
 import { h, download } from './dom.js';
-import { STATUSES, touchSong } from '../core/practice-log.js';
+import { STATUSES, updateSongStatus } from '../core/practice-log.js';
 
 const badge = (text, cls = '', title = '') => h('span', { class: `badge ${cls}`, title }, text);
 
@@ -88,8 +88,7 @@ export function mount(el, params, ctx) {
   function statusSelect(s) {
     const sel = h('select', { class: 'status', 'aria-label': `Status of ${s.title ?? 'song'}`, onchange: async (e) => {
       try {
-        songStatus = touchSong(songStatus, s.id, new Date(), e.target.value);
-        await ctx.store.set('songStatus', songStatus);
+        songStatus = await updateSongStatus(ctx.store, s.id, new Date(), e.target.value);
       } catch (err) { say(`Could not save status: ${err.message}`); }
     } }, STATUSES.map((v) => h('option', { value: v }, v)));
     sel.value = songStatus[s.id]?.status ?? 'new';
@@ -213,7 +212,8 @@ export function mount(el, params, ctx) {
   }
 
   (async () => {
-    try { if (ctx.store) { packs = await ctx.store.getPacks(); songStatus = (await ctx.store.get('songStatus')) ?? {}; } } catch { /* render shows an error if the store is missing */ }
+    try { if (ctx.store) songStatus = (await ctx.store.get('songStatus')) ?? {}; } catch { /* selects fall back to 'new' */ }
+    try { if (ctx.store) packs = await ctx.store.getPacks(); } catch { /* render shows an error if the store is missing */ }
     if (alive) render();
   })();
 

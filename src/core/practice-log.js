@@ -42,3 +42,12 @@ export function recentSongIds(map, n = 3) {
     .slice(0, n)
     .map(([id]) => id);
 }
+
+// Read-modify-write against a store ({get, set}) so concurrent writers' entries survive.
+// Re-reads kv right before writing; returns the written map.
+export async function updateSongStatus(store, id, at, status) {
+  const current = (await store.get('songStatus')) ?? {};
+  const next = touchSong(current, id, at, status);
+  await store.set('songStatus', next);
+  return next;
+}

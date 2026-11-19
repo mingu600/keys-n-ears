@@ -22,3 +22,16 @@ test('touchSong keeps status; recentSongIds sorts newest first', () => {
   assert.deepEqual(recentSongIds(m, 2), ['a', 'b']);
   assert.deepEqual(recentSongIds({ x: { status: 'new' } }), []);
 });
+
+import { updateSongStatus } from '../../src/core/practice-log.js';
+test('updateSongStatus re-reads kv so other entries survive', async () => {
+  const kv = { songStatus: { other: { status: 'can play', lastPracticed: '2026-11-01T00:00:00.000Z' } } };
+  const store = { get: async (k) => kv[k], set: async (k, v) => { kv[k] = v; } };
+  await updateSongStatus(store, 'a', new Date('2026-11-02T00:00:00Z'), 'learning');
+  assert.equal(kv.songStatus.other.status, 'can play');
+  assert.equal(kv.songStatus.a.status, 'learning');
+  kv.songStatus = { ...kv.songStatus, late: { status: 'new', lastPracticed: '2026-11-03T00:00:00.000Z' } }; // written elsewhere meanwhile
+  await updateSongStatus(store, 'a', new Date('2026-11-04T00:00:00Z'));
+  assert.ok(kv.songStatus.late && kv.songStatus.other);
+  assert.equal(kv.songStatus.a.status, 'learning');
+});

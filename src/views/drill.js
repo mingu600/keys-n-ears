@@ -2,7 +2,7 @@ import { buildPool, matches, revealVoicing, FAMILIES } from '../theory/chords.js
 import { record, pickNext, weakest, scoreFromTime, withHint, SKIP_SCORE, TARGETS } from '../core/scheduler.js';
 import { createKeyboard } from '../ui/keyboard.js';
 import { filterByGenre } from '../library/library.js';
-import { touchSong } from '../core/practice-log.js';
+import { updateSongStatus } from '../core/practice-log.js';
 import { poolFromSongs, progressionPrompt, voiceLeadOk } from './drill-logic.js';
 
 const STORE_KEY = 'chord-drill:v2';
@@ -120,8 +120,7 @@ export function mount(el, params, ctx) {
   async function markPracticed(id) {
     if (!ctx.store || !id) return;
     try {
-      const map = (await ctx.store.get('songStatus')) ?? {};
-      await ctx.store.set('songStatus', touchSong(map, id, new Date()));
+      await updateSongStatus(ctx.store, id, new Date());
     } catch (e) {
       console.error('song status not saved', e);
     }
@@ -130,6 +129,10 @@ export function mount(el, params, ctx) {
   function nextChord() {
     const leading = state.settings.mode === 'lead' && nextLeadChord();
     if (!leading) state.lead = null;
+    if (state.settings.mode === 'lead' && !leading) {
+      state.poolNote = 'No songs with a usable progression, using single chords.';
+      $('pool-size').textContent = `${state.pool.length} chords in rotation. ${state.poolNote}`;
+    }
     $('next').textContent = leading ? (state.lead.chords[state.lead.idx + 1]?.symbol ?? '') : '';
     if (!leading) state.current = pickNext(state.pool, state.stats, state.current, {
       keyOf: (c) => 'chord:' + c.id,
@@ -164,6 +167,7 @@ export function mount(el, params, ctx) {
 
   function finish(score, rawMs, message) {
     state.solved = true;
+    if (score === SKIP_SCORE && state.lead) state.lead.prevNotes = null;
     state.stats = record(state.stats, 'chord:' + state.current.id, score, rawMs);
     state.session.count++;
     state.session.totalMs += rawMs;
@@ -177,6 +181,7 @@ export function mount(el, params, ctx) {
   function hint() {
     if (state.solved) return;
     state.usedHint = true;
+    if (state.lead) state.lead.prevNotes = null; // hinted: don't compare the next chord against stale notes
     sound.playNotes(revealVoicing(state.current));
     render();
   }
