@@ -20,3 +20,8 @@ export function download(name, text) {
   a.remove();
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
+
+// Like parent.append, but skips null/undefined/false (native append would write the text "null").
+export function put(parent, ...kids) {
+  parent.append(...kids.flat().filter((k) => k != null && k !== false));
+}

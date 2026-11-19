@@ -1,7 +1,7 @@
 import { GENRES, normalizeSong, sectionChords } from '../library/schema.js';
 import { applyTaps, shiftOccurrence } from '../library/tapsync.js';
 import { createYouTube, parseYouTubeId } from '../core/youtube.js';
-import { h } from './dom.js';
+import { h, put } from './dom.js';
 import { recordHook } from './hook-recorder.js';
 
 const TONICS = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab', 'A', 'Bb', 'B'];
@@ -242,7 +242,7 @@ export function mount(el, params, ctx) {
     const prevIdx = draft.form.slice(0, occ).map((f, i) => i).reverse()
       .find((i) => draft.form[i].section === draft.form[occ].section && Array.isArray(draft.form[i].chordTimes) && draft.form[i].start != null);
     const times = draft.form[occ].chordTimes;
-    tapBox.append(
+    put(tapBox,
       h('div', { class: 'row' },
         field('Occurrence', h('select', { disabled: tapping, onchange: (e) => { occ = Number(e.target.value); tapNote = ''; renderTap(); } },
           draft.form.map((f, i) => h('option', { value: i, selected: i === occ }, `${i + 1}. ${f.section}${Array.isArray(f.chordTimes) ? ' (synced)' : ''}`)))),
@@ -291,7 +291,7 @@ export function mount(el, params, ctx) {
       h('strong', {}, k.name), h('span', { class: 'muted' }, `${k.section ?? ''} · ${k.notes?.length ?? 0} notes`),
       h('label', {}, h('input', { type: 'checkbox', checked: !!k.verified, onchange: (e) => { k.verified = e.target.checked; } }), ' I checked this'),
       h('button', { type: 'button', onclick: () => { draft.hooks.splice(i, 1); renderHooks(); validate(); } }, 'Delete'))));
-    hooksBox.append(h('div', { class: 'row' },
+    put(hooksBox, h('div', { class: 'row' },
       field('Hook name', h('input', { type: 'text', value: hookName, disabled: !!recorder, oninput: (e) => { hookName = e.target.value; } })),
       field('Section', h('select', { disabled: !!recorder, onchange: (e) => { hookSection = e.target.value; } },
         sectionNames().map((n) => h('option', { value: n, selected: n === hookSection }, n)))),
