@@ -35,6 +35,24 @@ export function releaseSource(held, source) {
   return released;
 }
 
+// Pure: ports in `portMap` (a Map of id -> port) that are currently connected.
+export function connectedPorts(portMap) {
+  return portMap ? [...portMap.values()].filter((p) => p.state === 'connected') : [];
+}
+
+// Pure: remove notes from the map (all, or only those held by `source`);
+// returns [{ note, source }] for each released note.
+export function releaseHeld(held, source) {
+  const released = [];
+  for (const [note, src] of held) {
+    if (source === undefined || src === source) {
+      held.delete(note);
+      released.push({ note, source: src });
+    }
+  }
+  return released;
+}
+
 export function createMidi({ onStatus }) {
   const held = new Map(); // note -> source
   const listeners = { change: new Set(), note: new Set(), pedal: new Set(), devices: new Set() };
@@ -55,6 +73,14 @@ export function createMidi({ onStatus }) {
     if (!held.delete(note)) return;
     emitNote('off', note, velocity, source);
     emitChange(source);
+  };
+
+  // Forced release (disconnect, blur, clear, input switch): note-offs, then one change.
+  const forceRelease = (source, changeSource) => {
+    const released = releaseHeld(held, source);
+    if (!released.length) return;
+    for (const r of released) emitNote('off', r.note, 0, r.source);
+    emitChange(changeSource ?? source);
   };
 
   // --- Persistence ---
@@ -87,21 +113,16 @@ export function createMidi({ onStatus }) {
   });
   // Releasing keys while the window is unfocused would leave notes stuck.
   window.addEventListener('blur', () => {
-    if (held.size === 0) return;
-    held.clear();
-    emitChange('qwerty');
+    forceRelease(undefined, 'qwerty');
   });
 
   // --- Mouse (called by the on-screen keyboard) ---
   const toggle = (note) => (held.has(note) ? release(note, 'mouse') : press(note, 'mouse'));
-  const clear = () => {
-    held.clear();
-    emitChange('mouse');
-  };
+  const clear = () => forceRelease(undefined, 'mouse');
 
   // --- Web MIDI ---
   let access = null;
-  const list = (map) => (map ? [...map.values()].map((p) => ({ id: p.id, name: p.name })) : []);
+  const list = (map) => connectedPorts(map).map((p) => ({ id: p.id, name: p.name }));
   const inputs = () => list(access && access.inputs);
   const outputs = () => list(access && access.outputs);
 
@@ -115,7 +136,7 @@ export function createMidi({ onStatus }) {
 
   const selectedInputs = () => {
     if (!access) return [];
-    const all = [...access.inputs.values()];
+    const all = connectedPorts(access.inputs);
     return saved.input === 'all' ? all : all.filter((i) => i.id === saved.input);
   };
 
@@ -136,6 +157,7 @@ export function createMidi({ onStatus }) {
   };
 
   const selectInput = (id) => {
+    forceRelease('midi');
     saved.input = id || 'all';
     persist();
     bind(false);
@@ -148,8 +170,10 @@ export function createMidi({ onStatus }) {
     if (!access || !saved.output) return;
     const out = access.outputs.get(saved.output);
     if (!out) return;
-    if (timestampMs === undefined) out.send(bytes);
-    else out.send(bytes, timestampMs);
+    try {
+      if (timestampMs === undefined) out.send(bytes);
+      else out.send(bytes, timestampMs);
+    } catch { /* output disconnected or closed: never throw into callers */ }
   };
 
   if (!navigator.requestMIDIAccess) {
@@ -161,7 +185,7 @@ export function createMidi({ onStatus }) {
         access.onstatechange = (e) => {
           const port = e && e.port;
           const gone = port && port.type === 'input' && port.state === 'disconnected';
-          if (gone && releaseSource(held, 'midi').length) emitChange('midi');
+          if (gone) forceRelease('midi');
           bind(Boolean(gone));
           emit('devices', { inputs: inputs(), outputs: outputs() });
         };

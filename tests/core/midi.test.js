@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { parseMidiMessage, releaseSource } from '../../src/core/midi.js';
+import { parseMidiMessage, releaseSource, releaseHeld, connectedPorts } from '../../src/core/midi.js';
 
 test('parse note on/off/pedal', () => {
   assert.deepEqual(parseMidiMessage([0x90, 60, 100]), { type: 'on', note: 60, velocity: 100 });
@@ -14,4 +14,23 @@ test('releaseSource only drops that source', () => {
   const held = new Map([[60, 'midi'], [64, 'qwerty'], [67, 'midi']]);
   assert.deepEqual(releaseSource(held, 'midi').sort(), [60, 67]);
   assert.deepEqual([...held.keys()], [64]);
+});
+
+test('releaseHeld releases everything, or only one source, reporting sources', () => {
+  const mk = () => new Map([[60, 'midi'], [64, 'qwerty'], [67, 'midi']]);
+  const all = mk();
+  assert.deepEqual(releaseHeld(all, undefined), [
+    { note: 60, source: 'midi' }, { note: 64, source: 'qwerty' }, { note: 67, source: 'midi' },
+  ]);
+  assert.equal(all.size, 0);
+  const some = mk();
+  assert.deepEqual(releaseHeld(some, 'qwerty'), [{ note: 64, source: 'qwerty' }]);
+  assert.deepEqual([...some.keys()], [60, 67]);
+  assert.deepEqual(releaseHeld(new Map(), undefined), []);
+});
+
+test('connectedPorts keeps only connected ports', () => {
+  const m = new Map([['a', { id: 'a', state: 'connected' }], ['b', { id: 'b', state: 'disconnected' }]]);
+  assert.deepEqual(connectedPorts(m).map((p) => p.id), ['a']);
+  assert.deepEqual(connectedPorts(null), []);
 });
