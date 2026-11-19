@@ -208,6 +208,8 @@ export function createMidi({ onStatus }) {
     outputs,
     selectInput,
     selectOutput,
+    // True when a saved output is currently connected (so send() will reach a port).
+    hasOutput: () => Boolean(access && saved.output && access.outputs.get(saved.output)?.state === 'connected'),
     send,
   };
 }

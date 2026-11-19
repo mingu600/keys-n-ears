@@ -2,7 +2,7 @@ import { buildPool, matches, revealVoicing, FAMILIES } from '../theory/chords.js
 import { record, pickNext, weakest, scoreFromTime, withHint, SKIP_SCORE, TARGETS } from '../core/scheduler.js';
 import { createMidi } from '../core/midi.js';
 import { createKeyboard } from '../ui/keyboard.js';
-import * as synth from '../core/fallback-synth.js';
+import { createSound } from '../core/sound.js';
 
 const STORE_KEY = 'chord-drill:v2';
 const ADVANCE_DELAY_MS = 350;
@@ -169,9 +169,12 @@ const midi = createMidi({
   },
 });
 
+const sound = createSound(midi);
+if (location.hostname === 'localhost') window.ctx = { midi, sound };
+
 midi.on('change', ({ held, source }) => {
   state.held = held;
-  if (source !== 'midi') synth.sync(held);
+  if (source !== 'midi') sound.echo(held);
   render();
   check();
 });
