@@ -17,19 +17,35 @@ export const QUALITIES = {
   add9: { symbol: 'add9', family: 'color', tones: [[0, 0], [4, 2], [7, 4], [14, 1]] },
   dim:  { symbol: 'dim',  family: 'diminished', tones: [[0, 0], [3, 2], [6, 4]] },
   m7b5: { symbol: 'm7♭5', family: 'diminished', tones: [[0, 0], [3, 2], [6, 4], [10, 6]] },
+  aug:  { symbol: 'aug',  family: 'diminished', tones: [[0, 0], [4, 2], [8, 4]] },
+  dim7: { symbol: 'dim7', family: 'diminished', tones: [[0, 0], [3, 2], [6, 4], [9, 6]] },
+  6:    { symbol: '6',    family: 'color', tones: [[0, 0], [4, 2], [7, 4], [9, 5]] },
+  m6:   { symbol: 'm6',   family: 'color', tones: [[0, 0], [3, 2], [7, 4], [9, 5]] },
+  '7sus4': { symbol: '7sus4', family: 'color', tones: [[0, 0], [5, 3], [7, 4], [10, 6]] },
+  madd9: { symbol: 'madd9', family: 'color', tones: [[0, 0], [3, 2], [7, 4], [14, 1]] },
+  // Extended chords: `essential` lists the semitones that must be held
+  // (shell/rootless voicings are fine); strict mode requires every tone.
+  9:    { symbol: '9',    family: 'extended', tones: [[0, 0], [4, 2], [7, 4], [10, 6], [14, 1]], essential: [4, 10, 14] },
+  m9:   { symbol: 'm9',   family: 'extended', tones: [[0, 0], [3, 2], [7, 4], [10, 6], [14, 1]], essential: [3, 10, 14] },
+  maj9: { symbol: 'maj9', family: 'extended', tones: [[0, 0], [4, 2], [7, 4], [11, 6], [14, 1]], essential: [4, 11, 14] },
+  m11:  { symbol: 'm11',  family: 'extended', tones: [[0, 0], [3, 2], [7, 4], [10, 6], [14, 1], [17, 3]], essential: [3, 10, 17] },
+  13:   { symbol: '13',   family: 'extended', tones: [[0, 0], [4, 2], [7, 4], [10, 6], [14, 1], [21, 5]], essential: [4, 10, 21] },
+  '7b9': { symbol: '7♭9', family: 'extended', tones: [[0, 0], [4, 2], [7, 4], [10, 6], [13, 1]], essential: [4, 10, 13] },
+  '7#9': { symbol: '7♯9', family: 'extended', tones: [[0, 0], [4, 2], [7, 4], [10, 6], [15, 1]], essential: [4, 10, 15] },
 };
 
 export const FAMILIES = {
   triads: 'Triads (C, Cm)',
   sevenths: '7ths (Cmaj7, Cm7, C7)',
   color: 'Color (sus2, sus4, add9)',
-  diminished: 'Diminished (dim, m7♭5)',
+  diminished: 'Diminished (dim, m7♭5, aug)',
+  extended: 'Extended (9, m9, maj9, 11, 13, alt)',
 };
 
 // Roots as pop charts usually spell them.
 const MAJOR_ROOTS = ['C', 'D♭', 'D', 'E♭', 'E', 'F', 'F♯', 'G', 'A♭', 'A', 'B♭', 'B'];
 const MINOR_ROOTS = ['C', 'C♯', 'D', 'E♭', 'E', 'F', 'F♯', 'G', 'G♯', 'A', 'B♭', 'B'];
-const MINOR_LIKE = new Set(['m', 'm7', 'dim', 'm7b5']);
+const MINOR_LIKE = new Set(['m', 'm7', 'dim', 'm7b5', 'dim7', 'm6', 'madd9', 'm9', 'm11']);
 
 // Qualities that get slash-chord (inversion) variants.
 const INVERTIBLE = new Set(['maj', 'm', 'maj7', 'm7', '7']);
@@ -43,7 +59,7 @@ export function parseNote(name) {
     else if (ch === '♭' || ch === 'b') acc -= 1;
     else throw new Error(`Bad note name: ${name}`);
   }
-  return { letter, pc: (LETTER_PC[letter] + acc + 12) % 12 };
+  return { letter, pc: (LETTER_PC[letter] + acc + 12) % 12, name: LETTERS[letter] + accidentalString(acc) };
 }
 
 function accidentalString(acc) {
@@ -83,8 +99,18 @@ export function makeChord(rootName, quality, inversion = 0) {
     inversion,
     tones,
     pcs: new Set(tones.map((t) => t.pc)),
+    essential: q.essential ? new Set(q.essential.map((semis) => (rootPc + semis) % 12)) : null,
     bassPc: bassTone ? bassTone.pc : null,
+    bassName: bassTone ? bassTone.name : null,
   };
+}
+
+// Slash chord over any bass note, including non-chord tones (F/G).
+export function withBass(chord, bassName) {
+  const bass = parseNote(bassName);
+  const name = bass.name;
+  const label = `${chord.root}${QUALITIES[chord.quality].symbol}/${name}`;
+  return { ...chord, id: label, symbol: label, inversion: 0, bassPc: bass.pc, bassName: name };
 }
 
 // All chords for the chosen families. `slash` adds inversions as slash chords.
@@ -104,23 +130,30 @@ export function buildPool({ families, slash }) {
 }
 
 // Does the set of held MIDI notes play this chord?
-// - Every required pitch class must be held, and nothing outside the chord.
+// - Held pitch classes must all belong to the chord (or its foreign bass note).
 // - Octave doublings are fine.
-// - Lenient mode lets 4-note chords drop the perfect 5th (common pop voicing).
+// - Required tones: the chord's `essential` set when it has one (unless strict),
+//   otherwise every tone. Lenient mode lets 4+ note chords drop the perfect 5th.
 // - Slash chords need the slash note as the lowest note. Plain chords allow any inversion.
-export function matches(chord, heldNotes, { lenient = true } = {}) {
+export function matches(chord, heldNotes, { lenient = true, strict = false } = {}) {
   const notes = [...heldNotes];
   if (notes.length === 0) return false;
   const heldPcs = new Set(notes.map((n) => n % 12));
-  for (const pc of heldPcs) if (!chord.pcs.has(pc)) return false;
+  for (const pc of heldPcs) {
+    if (!chord.pcs.has(pc) && pc !== chord.bassPc) return false;
+  }
 
-  const rootPc = chord.tones[0].pc;
-  const canDropFifth = lenient && chord.tones.length >= 4;
-  for (const t of chord.tones) {
-    if (heldPcs.has(t.pc)) continue;
-    const isPerfectFifth = t.semis === 7 && t.pc !== rootPc;
-    if (canDropFifth && isPerfectFifth) continue;
-    return false;
+  if (chord.essential && !strict) {
+    for (const pc of chord.essential) if (!heldPcs.has(pc)) return false;
+  } else {
+    const rootPc = chord.tones[0].pc;
+    const canDropFifth = lenient && chord.tones.length >= 4;
+    for (const t of chord.tones) {
+      if (heldPcs.has(t.pc)) continue;
+      const isPerfectFifth = t.semis === 7 && t.pc !== rootPc;
+      if (canDropFifth && isPerfectFifth) continue;
+      return false;
+    }
   }
 
   if (chord.bassPc !== null) {

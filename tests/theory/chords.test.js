@@ -1,6 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { spellInterval, makeChord, buildPool, matches, revealVoicing } from '../../src/theory/chords.js';
+import { spellInterval, makeChord, buildPool, matches, revealVoicing, QUALITIES } from '../../src/theory/chords.js';
+import { parseChordSymbol } from '../../src/theory/parse.js';
 
 test('spells chord tones with correct letters', () => {
   assert.equal(spellInterval('E♭', 3, 2), 'G♭');
@@ -64,4 +65,26 @@ test('pool sizes', () => {
   assert.equal(buildPool({ families: ['triads'], slash: false }).length, 24);
   assert.equal(buildPool({ families: ['triads'], slash: true }).length, 72);
   assert.equal(buildPool({ families: ['sevenths'], slash: true }).length, 144);
+});
+
+test('extended chords accept shell/rootless voicings', () => {
+  const g9 = parseChordSymbol('G9');                  // G B D F A
+  assert.ok(matches(g9, [59, 65, 69]));               // B F A rootless
+  assert.ok(!matches(g9, [43, 59, 65]));              // missing the 9th
+  assert.ok(!matches(g9, [59, 65, 69], { strict: true }));
+  assert.ok(!matches(g9, [59, 65, 69, 72]));          // C is outside the chord
+});
+
+test('foreign-bass slash chord', () => {
+  const fg = parseChordSymbol('F/G');
+  assert.ok(matches(fg, [43, 65, 69, 72]));
+  assert.ok(!matches(fg, [53, 65, 69, 72]));          // G missing
+  assert.ok(!matches(fg, [65, 67, 69, 72]));          // G not lowest
+});
+
+test('every quality spells and reveals validly', () => {
+  for (const q of Object.keys(QUALITIES)) {
+    const c = makeChord('E♭', q);
+    assert.ok(matches(c, revealVoicing(c), { strict: true }), q);
+  }
 });
