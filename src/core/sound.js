@@ -110,11 +110,12 @@ export function createSound(midi) {
 
   function playNotes(notes, { when = 0, duration = 1, velocity = 0.7 } = {}) {
     if (!notes || !notes.length) return;
-    whenReady((elapsed) => {
-      const w = Math.max(0, when - elapsed);
-      if (usePiano()) playPiano(notes, w, duration, velocity);
-      else playBrowser(notes, w, duration, velocity);
-    });
+    // MIDI-out does not need the sampler: send immediately, never wait for sample load.
+    if (usePiano()) {
+      playPiano(notes, when, duration, velocity);
+      return;
+    }
+    whenReady((elapsed) => playBrowser(notes, Math.max(0, when - elapsed), duration, velocity));
   }
 
   function playSequence(events) {
