@@ -65,9 +65,10 @@ export function filterByGenre(songs, genres) {
   return songs.filter(s => (s.genres ?? []).some(g => genres.includes(g)));
 }
 
-export function buildExport({ songs, kv, packs }) {
+export function buildExport({ songs, kv, packs, local }) {
   const out = { app: 'practice-hub', version: 1, exportedAt: new Date().toISOString(), songs, kv };
   if (packs) out.packs = packs;
+  if (local) out.local = local;
   return out;
 }
 
@@ -98,7 +99,21 @@ export function parseImport(text) {
   if (!Array.isArray(d.songs)) return { ok: false, error: 'Missing songs list.' };
   if (!d.kv || typeof d.kv !== 'object' || Array.isArray(d.kv)) return { ok: false, error: 'Missing settings (kv).' };
   if (d.packs !== undefined && !Array.isArray(d.packs)) return { ok: false, error: 'Invalid packs list.' };
+  if (d.local !== undefined && (!d.local || typeof d.local !== 'object' || Array.isArray(d.local))) return { ok: false, error: 'Invalid local section.' };
   return { ok: true, data: d };
+}
+
+// Only these localStorage keys travel in a backup.
+export const LOCAL_KEYS = ['chord-drill:v2'];
+
+// Pure: pick the allowed keys out of a `local` section; values must be objects (parsed JSON).
+export function pickLocal(local) {
+  const out = {};
+  for (const k of LOCAL_KEYS) {
+    const v = local?.[k];
+    if (v && typeof v === 'object') out[k] = v;
+  }
+  return out;
 }
 
 // Browser only: seeds from data/seeds, merged with packs and user songs from the store.
@@ -117,7 +132,7 @@ export async function loadLibrary(store) {
       }
     };
     const getJson = async (url) => {
-      const res = await fetch(url);
+      const res = await fetch(url, { cache: 'no-cache' });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       return res.json();
     };

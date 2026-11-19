@@ -1,4 +1,4 @@
-import { filterByGenre, parsePack, parseImport, withoutToken, keepToken } from '../library/library.js';
+import { filterByGenre, parsePack, parseImport, withoutToken, keepToken, pickLocal, LOCAL_KEYS } from '../library/library.js';
 import { syncPacks } from '../core/github-sync.js';
 import { h, download } from './dom.js';
 import { STATUSES, updateSongStatus } from '../core/practice-log.js';
@@ -105,6 +105,11 @@ export function mount(el, params, ctx) {
   async function doExport() {
     try {
       const data = await ctx.store.exportAll();
+      const local = {};
+      for (const k of LOCAL_KEYS) {
+        try { const v = JSON.parse(localStorage.getItem(k)); if (v && typeof v === 'object') local[k] = v; } catch { /* absent or corrupt: skip */ }
+      }
+      if (Object.keys(local).length) data.local = local;
       download(`keys-n-ears-backup-${new Date().toISOString().slice(0, 10)}.json`, JSON.stringify(withoutToken(data), null, 2)); // token never goes into a file
     } catch (e) { say(`Export failed: ${e.message}`); }
   }
@@ -140,6 +145,12 @@ export function mount(el, params, ctx) {
       pendingImport = null;
       try {
         await ctx.store.importAll(keepToken(data, await ctx.store.get('contentSync')), { mode });
+        for (const [k, v] of Object.entries(pickLocal(data.local))) {
+          try { localStorage.setItem(k, JSON.stringify(v)); } catch { /* storage unavailable */ }
+        }
+        // The imported history replaces the in-memory copy so the next note does not overwrite it.
+        ctx.practiceLog = (await ctx.store.get('practiceLog')) ?? {};
+        songStatus = (await ctx.store.get('songStatus')) ?? {};
         await refresh();
         say(`Backup imported (${mode}).`);
       } catch (err) { say(`Import failed, nothing changed: ${err.message}`); }

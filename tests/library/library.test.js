@@ -90,3 +90,15 @@ test('keepToken preserves the current token on import', () => {
   const noCur = keepToken({ kv: { a: 1 } }, undefined);
   assert.deepEqual(noCur.kv, { a: 1 });
 });
+
+import { pickLocal } from '../../src/library/library.js';
+test('backup carries the local section and still accepts older backups', () => {
+  const local = { 'chord-drill:v2': { stats: { C: [1] } }, 'other': { x: 1 } };
+  const e = buildExport({ songs: [], kv: {}, local });
+  const r = parseImport(JSON.stringify(e));
+  assert.equal(r.ok, true);
+  assert.deepEqual(pickLocal(r.data.local), { 'chord-drill:v2': { stats: { C: [1] } } });
+  assert.equal(parseImport(JSON.stringify(buildExport({ songs: [], kv: {} }))).ok, true);
+  assert.deepEqual(pickLocal(undefined), {});
+  assert.equal(parseImport(JSON.stringify({ ...e, local: [] })).ok, false);
+});
