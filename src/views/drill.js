@@ -167,7 +167,6 @@ export function mount(el, params, ctx) {
 
   function finish(score, rawMs, message) {
     state.solved = true;
-    if (score === SKIP_SCORE && state.lead) state.lead.prevNotes = null;
     state.stats = record(state.stats, 'chord:' + state.current.id, score, rawMs);
     state.session.count++;
     state.session.totalMs += rawMs;
@@ -188,6 +187,7 @@ export function mount(el, params, ctx) {
 
   function skip() {
     if (state.solved) return;
+    if (state.lead) state.lead.prevNotes = null; // skipped: no reference for the next chord
     finish(SKIP_SCORE, performance.now() - state.shownAt, `Skipped: ${state.current.tones.map((t) => t.name).join(' ')}`);
   }
 
