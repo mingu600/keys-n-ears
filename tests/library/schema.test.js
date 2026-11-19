@@ -76,3 +76,7 @@ test('normalizeSong reports bad key; songProgressions survives it', () => {
   const song = normalizeSong(raw).song;
   assert.deepEqual(songProgressions(song), [{ section: 'V', key: undefined, romans: [], family: null }]);
 });
+test('normalizeSong treats section key null as inherit', () => {
+  const { errors } = normalizeSong(base({ sections: [{ name: 'V', key: null, bars: [['C']] }] }));
+  assert.deepEqual(errors, []);
+});

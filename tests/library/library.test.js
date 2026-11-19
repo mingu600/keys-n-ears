@@ -63,3 +63,11 @@ test('mergeLibrary skips malformed packs with a warning', () => {
   assert.ok(r.warnings.some(w => /bad/.test(w)));
   assert.deepEqual(r.songs.map(s => s.id), ['a', 'n']);
 });
+test('mergeLibrary skips id-less pack songs individually', () => {
+  const pack = { id: 'p', createdAt: '1', songs: [null, { title: 'no id' }, { id: 'ok', title: 'OK' }],
+    hooks: { ok: [{ name: 'H', notes: [[60, 0, 1], [61, 1, 1], [62, 2, 1], [63, 3, 1]] }] } };
+  const r = mergeLibrary([], [pack], []);
+  assert.deepEqual(r.songs.map(s => s.id), ['ok']);
+  assert.equal(r.warnings.filter(w => w === 'pack p: song without id skipped').length, 2);
+  assert.equal(r.songs[0].hooks.length, 1);
+});

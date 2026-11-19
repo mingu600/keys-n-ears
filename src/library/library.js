@@ -38,7 +38,10 @@ export function mergeLibrary(seeds, packs, userSongs) {
       continue;
     }
     try {
-    for (const s of pack.songs ?? []) byId.set(s.id, { ...clone(s), source: 'pack' });
+    for (const s of pack.songs ?? []) {
+      if (!s || typeof s !== 'object' || !s.id) { warnings.push(`pack ${pack.id}: song without id skipped`); continue; }
+      byId.set(s.id, { ...clone(s), source: 'pack' });
+    }
     for (const [songId, hooks] of Object.entries(pack.hooks ?? {})) {
       const song = byId.get(songId);
       if (!song) { warnings.push(`pack ${pack.id}: no song "${songId}"`); continue; }
@@ -111,7 +114,9 @@ export async function loadLibrary(store) {
       } catch (e) { warnings.push(`seed file ${name}: ${e.message}`); }
     }
     const users = (await store.getSongs()).map(check).filter(Boolean);
-    const packs = (await store.getPacks()).map(r => r?.pack);
+    const packs = (await store.getPacks()).map(r => r?.pack).map(p => (p && Array.isArray(p.songs)
+      ? { ...p, songs: p.songs.map(s => (s && typeof s === 'object' && s.id ? check(s) : s)).filter(s => s !== null) }
+      : p));
     const merged = mergeLibrary(seeds, packs, users);
     merged.warnings.unshift(...warnings);
     lib.songs = merged.songs;

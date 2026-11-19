@@ -50,7 +50,7 @@ export function normalizeSong(raw) {
   if (!sections.length) errors.push('no sections');
 
   for (const sec of sections) {
-    if (sec.key !== undefined && !validKey(sec.key)) errors.push(`${sec.name}: invalid key`);
+    if (sec.key != null && !validKey(sec.key)) errors.push(`${sec.name}: invalid key`);
     if (!Array.isArray(sec.bars)) { errors.push(`${sec.name}: bars must be a list`); continue; }
     sec.bars.forEach((bar, i) => {
       if (!Array.isArray(bar)) { errors.push(`${sec.name} bar ${i + 1}: not a list of chords`); return; }
