@@ -1,12 +1,15 @@
 import { buildPool, matches, revealVoicing, FAMILIES } from '../theory/chords.js';
 import { record, pickNext, weakest, scoreFromTime, withHint, SKIP_SCORE, TARGETS } from '../core/scheduler.js';
 import { createKeyboard } from '../ui/keyboard.js';
+import { filterByGenre } from '../library/library.js';
+import { touchSong } from '../core/practice-log.js';
+import { poolFromSongs, progressionPrompt, voiceLeadOk } from './drill-logic.js';
 
 const STORE_KEY = 'chord-drill:v2';
 const ADVANCE_DELAY_MS = 350;
 const DRILL_HTML = `
     <section class="stage">
-      <div id="chord" class="chord">…</div>
+      <div class="chordrow"><div id="chord" class="chord">…</div><span id="next" class="next muted"></span></div>
       <div class="meta">
         <span id="timer" class="timer">0.0s</span>
         <span id="feedback" class="feedback"></span>
@@ -28,6 +31,9 @@ const DRILL_HTML = `
         <div id="families" class="checks"></div>
         <label><input type="checkbox" id="slash"> Slash chords (D/F♯, Cmaj7/B)</label>
         <label><input type="checkbox" id="lenient"> Allow dropping the 5th in 4-note chords</label>
+        <label><input type="checkbox" id="strict"> Strict voicing (every chord tone)</label>
+        <label>Chords from <select id="source"><option value="all">All chords</option><option value="songs">From my songs</option></select></label>
+        <label>Mode <select id="mode"><option value="single">Single chords</option><option value="lead">Voice leading</option></select></label>
         <p id="pool-size" class="muted"></p>
       </div>
       <div class="panel">
@@ -49,7 +55,7 @@ export function mount(el, params, ctx) {
 
   const saved = load();
   const state = {
-    settings: saved.settings ?? { families: ['triads'], slash: false, lenient: true },
+    settings: { families: ['triads'], slash: false, lenient: true, strict: false, source: 'all', mode: 'single', ...saved.settings },
     stats: saved.stats ?? {},
     pool: [],
     current: null,
@@ -58,6 +64,8 @@ export function mount(el, params, ctx) {
     solved: false,
     held: new Set(),
     session: { count: 0, totalMs: 0 },
+    poolNote: '',
+    lead: null, // { song, chords, idx, prevNotes } while walking a progression
   };
 
   // ---------- persistence (per-browser only) ----------
@@ -79,12 +87,51 @@ export function mount(el, params, ctx) {
   // ---------- drill flow ----------
   function rebuildPool() {
     if (state.settings.families.length === 0) state.settings.families = ['triads'];
-    state.pool = buildPool(state.settings);
-    $('pool-size').textContent = `${state.pool.length} chords in rotation`;
+    state.poolNote = '';
+    let pool = null;
+    if (state.settings.source === 'songs') {
+      pool = poolFromSongs(filterByGenre(ctx.library?.songs ?? [], ctx.settings.genres));
+      if (!pool.length) {
+        pool = null;
+        state.poolNote = 'No chords found in your songs for the current genre filter, so using All chords.';
+      }
+    }
+    state.pool = pool ?? buildPool(state.settings);
+    $('pool-size').textContent = `${state.pool.length} chords in rotation. ${state.poolNote}`.trim();
+  }
+
+  // Voice-leading mode: advance along the song's progression, starting a new song when it ends.
+  function nextLeadChord() {
+    if (!state.lead || state.lead.idx + 1 >= state.lead.chords.length) {
+      const candidates = filterByGenre(ctx.library?.songs ?? [], ctx.settings.genres)
+        .map((song) => ({ song, chords: progressionPrompt(song) }))
+        .filter((c) => c.chords.length >= 2);
+      if (!candidates.length) return false;
+      const pick = candidates[Math.floor(Math.random() * candidates.length)];
+      state.lead = { song: pick.song, chords: pick.chords, idx: 0, prevNotes: null };
+      markPracticed(pick.song.id);
+    } else {
+      state.lead.idx++;
+    }
+    state.current = state.lead.chords[state.lead.idx];
+    return true;
+  }
+
+  async function markPracticed(id) {
+    if (!ctx.store || !id) return;
+    try {
+      const map = (await ctx.store.get('songStatus')) ?? {};
+      await ctx.store.set('songStatus', touchSong(map, id, new Date()));
+    } catch (e) {
+      console.error('song status not saved', e);
+    }
   }
 
   function nextChord() {
-    state.current = pickNext(state.pool, state.stats, state.current, {
+    const leading = state.settings.mode === 'lead' && nextLeadChord();
+    if (!leading) state.lead = null;
+    $('next').textContent = leading ? (state.lead.chords[state.lead.idx + 1]?.symbol ?? '') : '';
+    if (!leading) state.current = pickNext(state.pool, state.stats, state.current, {
       keyOf: (c) => 'chord:' + c.id,
       // Avoid back-to-back chords with the same root and quality (e.g. C then C/E),
       // so a still-held previous chord can't count as the answer.
@@ -98,12 +145,18 @@ export function mount(el, params, ctx) {
     $('feedback').textContent = '';
     render();
     // The player may already be holding the answer (rare, but possible).
-    check();
+    // Not in voice-leading mode: a repeated chord would otherwise count with zero movement.
+    if (!leading) check();
   }
 
   function check() {
     if (state.solved || !state.current) return;
-    if (!matches(state.current, state.held, { lenient: state.settings.lenient })) return;
+    if (!matches(state.current, state.held, { lenient: state.settings.lenient, strict: state.settings.strict })) return;
+    if (state.lead?.prevNotes && !voiceLeadOk(state.lead.prevNotes, [...state.held])) {
+      $('feedback').textContent = 'Right chord, smoother move?';
+      return;
+    }
+    if (state.lead) state.lead.prevNotes = [...state.held];
     const ms = performance.now() - state.shownAt;
     const score = scoreFromTime(ms, TARGETS.chord);
     finish(state.usedHint ? withHint(score) : score, ms, state.usedHint ? 'Got it (hint used)' : `${(ms / 1000).toFixed(2)}s`);
@@ -181,6 +234,16 @@ export function mount(el, params, ctx) {
     }
     bindToggle('slash', 'slash');
     bindToggle('lenient', 'lenient');
+    bindToggle('strict', 'strict');
+    for (const key of ['source', 'mode']) {
+      const sel = $(key);
+      sel.value = state.settings[key];
+      sel.addEventListener('change', () => {
+        state.settings[key] = sel.value;
+        if (key === 'mode') state.lead = null;
+        applySettings();
+      });
+    }
   }
 
   function bindToggle(id, key) {
@@ -231,6 +294,13 @@ export function mount(el, params, ctx) {
     }
   };
   window.addEventListener('keydown', onKeydown);
+  const onGenres = () => {
+    if (state.settings.source === 'songs' || state.settings.mode === 'lead') {
+      state.lead = null;
+      applySettings();
+    }
+  };
+  window.addEventListener('hub:genres', onGenres);
 
   renderSettings();
   rebuildPool();
@@ -240,6 +310,7 @@ export function mount(el, params, ctx) {
 
   return () => {
     window.removeEventListener('keydown', onKeydown);
+    window.removeEventListener('hub:genres', onGenres);
     offChange();
     cancelAnimationFrame(rafId);
     clearTimeout(advanceTimer);

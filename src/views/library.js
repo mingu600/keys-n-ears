@@ -1,6 +1,7 @@
 import { filterByGenre, parsePack, parseImport, withoutToken, keepToken } from '../library/library.js';
 import { syncPacks } from '../core/github-sync.js';
 import { h, download } from './dom.js';
+import { STATUSES, touchSong } from '../core/practice-log.js';
 
 const badge = (text, cls = '', title = '') => h('span', { class: `badge ${cls}`, title }, text);
 
@@ -13,6 +14,7 @@ export function mount(el, params, ctx) {
   let syncResult = null;
   let alive = true;
   let packs = [];
+  let songStatus = {};
 
   const onGenres = () => renderList();
   window.addEventListener('hub:genres', onGenres);
@@ -75,12 +77,23 @@ export function mount(el, params, ctx) {
     const meta = [s.artist, (s.genres ?? []).join(', '), s.key ? `${s.key.tonic} ${s.key.mode}` : ''].filter(Boolean).join(' · ');
     const li = h('li', { class: 'song' },
       h('div', {}, h('h2', {}, s.title ?? '(untitled)'), h('div', { class: 'muted' }, meta), h('div', {}, badges)),
-      h('a', { class: 'button', href: `#/song/${encodeURIComponent(s.id)}/edit` }, 'Edit'));
+      h('div', { class: 'row' }, statusSelect(s), h('a', { class: 'button', href: `#/song/${encodeURIComponent(s.id)}/edit` }, 'Edit')));
     if (errs.length) {
       const d = h('details', {}, h('summary', {}, 'Errors'), h('ul', {}, errs.map((e) => h('li', { class: 'err' }, e))));
       li.append(d);
     }
     return li;
+  }
+
+  function statusSelect(s) {
+    const sel = h('select', { class: 'status', 'aria-label': `Status of ${s.title ?? 'song'}`, onchange: async (e) => {
+      try {
+        songStatus = touchSong(songStatus, s.id, new Date(), e.target.value);
+        await ctx.store.set('songStatus', songStatus);
+      } catch (err) { say(`Could not save status: ${err.message}`); }
+    } }, STATUSES.map((v) => h('option', { value: v }, v)));
+    sel.value = songStatus[s.id]?.status ?? 'new';
+    return sel;
   }
 
   function notes() {
@@ -200,7 +213,7 @@ export function mount(el, params, ctx) {
   }
 
   (async () => {
-    try { if (ctx.store) packs = await ctx.store.getPacks(); } catch { /* render shows an error if the store is missing */ }
+    try { if (ctx.store) { packs = await ctx.store.getPacks(); songStatus = (await ctx.store.get('songStatus')) ?? {}; } } catch { /* render shows an error if the store is missing */ }
     if (alive) render();
   })();
 

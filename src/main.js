@@ -4,6 +4,7 @@ import { createRouter } from './core/router.js';
 import { openStore } from './core/store.js';
 import { loadLibrary } from './library/library.js';
 import { GENRES } from './library/schema.js';
+import { addActivity } from './core/practice-log.js';
 
 const SETTINGS_KEY = 'hub:settings';
 
@@ -117,4 +118,16 @@ try {
 } catch (e) {
   console.error('Could not open the song store', e);
 }
+
+// Practice log: every note-on from any view counts. kv is written only when a new minute is recorded.
+try {
+  ctx.practiceLog = (await ctx.store.get('practiceLog')) ?? {};
+} catch { ctx.practiceLog = {}; }
+midi.on('note', ({ type }) => {
+  if (type !== 'on') return;
+  const next = addActivity(ctx.practiceLog, new Date());
+  if (next === ctx.practiceLog) return;
+  ctx.practiceLog = next;
+  ctx.store?.set('practiceLog', next).catch((e) => console.error('practice log not saved', e));
+});
 router.start();

@@ -39,7 +39,7 @@ export const FAMILIES = {
   sevenths: '7ths (Cmaj7, Cm7, C7)',
   color: 'Color (sus2, sus4, add9)',
   diminished: 'Diminished (dim, m7♭5, aug)',
-  extended: 'Extended (9, m9, maj9, 11, 13, alt)',
+  extended: 'Extended (9, 11, 13, alt)',
 };
 
 // Roots as pop charts usually spell them.

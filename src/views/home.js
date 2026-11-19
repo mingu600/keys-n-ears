@@ -1,3 +1,6 @@
+import { minutesOn, recentSongIds } from '../core/practice-log.js';
+import { h, put } from './dom.js';
+
 const TILES = [
   { title: 'Song Studio', desc: 'Build and arrange your own songs.' },
   { title: 'Name That Progression', desc: 'Hear it, name the Roman numerals.' },
@@ -9,7 +12,7 @@ const TILES = [
   { title: 'Song Library', desc: 'Your songs and charts.', href: '#/library' },
 ];
 
-export function mount(el) {
+export function mount(el, params, ctx) {
   const wrap = document.createElement('div');
   wrap.className = 'home';
   const tiles = TILES.map((t) => {
@@ -22,8 +25,26 @@ export function mount(el) {
   wrap.innerHTML = `
     <h2 class="section">Practice</h2>
     <div class="tiles">${tiles}</div>
-    <h2 class="section">Recent</h2>
-    <p class="muted recent">Your recent activity will show up here.</p>`;
+    <h2 class="section">Recent</h2>`;
+  const recent = h('div', { class: 'recent' });
+  wrap.append(recent);
   el.appendChild(wrap);
-  return () => {};
+
+  let alive = true;
+  (async () => {
+    let status = {};
+    try { status = (await ctx?.store?.get('songStatus')) ?? {}; } catch { /* store unavailable: show empty state */ }
+    if (!alive) return;
+    const songs = ctx?.library?.songs ?? [];
+    const rows = recentSongIds(status, 3)
+      .map((id) => ({ song: songs.find((s) => s.id === id), info: status[id] }))
+      .filter((r) => r.song);
+    const mins = minutesOn(ctx?.practiceLog ?? {}, new Date());
+    put(recent,
+      h('p', {}, `Today: ${mins} min practiced`),
+      rows.length
+        ? h('ul', { class: 'recent-list' }, rows.map((r) => h('li', {}, `${r.song.title ?? '(untitled)'} `, h('span', { class: 'muted' }, `· ${r.info.status}`))))
+        : h('p', { class: 'muted' }, 'Songs you practice will show up here.'));
+  })();
+  return () => { alive = false; };
 }
